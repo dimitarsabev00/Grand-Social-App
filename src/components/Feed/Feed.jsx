@@ -32,7 +32,6 @@ const Feed = () => {
     e.preventDefault();
     const newDoc = {
       name: "Dimitar Sabev(ADMIN)",
-      description: "this is a new post test",
       message: input,
       photoUrl: "",
       createdAt: Timestamp.now().toDate().toDateString(),
@@ -75,7 +74,7 @@ const Feed = () => {
             <Post
               key={post.id}
               name={post.name}
-              description={post.description}
+              description={post.createdAt}
               message={post.message}
             />
           );
