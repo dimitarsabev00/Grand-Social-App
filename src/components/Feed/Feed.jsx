@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import "./Feed.css";
 import InputOption from "../InputOption/InputOption";
@@ -6,22 +6,40 @@ import ImageIcon from "@mui/icons-material/Image";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import CalendarViewDayIcon from "@mui/icons-material/CalendarViewDay";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import Post from "../Post/Post";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  Timestamp,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../../configs/firebase";
 const Feed = () => {
   const [input, setInput] = useState("");
+  const [posts, setPosts] = useState([]);
   const postsCollectionRef = collection(db, "posts");
 
+  const getPosts = async () => {
+    const data = await getDocs(postsCollectionRef);
+    setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    await addDoc(postsCollectionRef, {
+    const newDoc = {
       name: "Dimitar Sabev(ADMIN)",
       description: "this is a new post test",
       message: input,
       photoUrl: "",
       createdAt: Timestamp.now().toDate().toDateString(),
-    });
+    };
+    await addDoc(postsCollectionRef, newDoc);
     setInput("");
+    window.location.reload();
   };
   return (
     <div className="feed">
@@ -51,6 +69,17 @@ const Feed = () => {
           />
         </div>
       </div>
+      {posts &&
+        posts.map((post) => {
+          return (
+            <Post
+              key={post.id}
+              name={post.name}
+              description={post.description}
+              message={post.message}
+            />
+          );
+        })}
     </div>
   );
 };
