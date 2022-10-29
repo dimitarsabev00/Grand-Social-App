@@ -72,13 +72,13 @@ const Feed = () => {
         </div>
       </div>
       {posts &&
-        posts.map((post) => {
+        posts.map(({ id, name, createdAt, message }) => {
           return (
             <Post
-              key={post.id}
-              name={post.name}
-              description={post.createdAt}
-              message={post.message}
+              key={id}
+              name={name}
+              description={createdAt}
+              message={message}
             />
           );
         })}
