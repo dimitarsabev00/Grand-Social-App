@@ -17,14 +17,18 @@ const Auth = () => {
       alert("Please enter your email & password");
     }
 
-    signInWithEmailAndPassword(auth, email, password).then((userAuth) => {
-      dispatch(
-        login({
-          email: userAuth.user.email,
-          uid: userAuth.user.uid,
-        })
-      );
-    });
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
+          })
+        );
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
   const register = () => {
     if (!email || !password) {
