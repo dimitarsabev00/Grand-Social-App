@@ -7,6 +7,7 @@
   padding: 10px 0;
   width: 100%;
   z-index: 999;
+  background-color: #f3f2ef;
 }
 .header_left {
   display: flex;
