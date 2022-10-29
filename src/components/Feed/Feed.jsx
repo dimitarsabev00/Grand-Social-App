@@ -13,6 +13,8 @@ import {
   getDocs,
   Timestamp,
   onSnapshot,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../../configs/firebase";
 const Feed = () => {
@@ -20,25 +22,26 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const postsCollectionRef = collection(db, "posts");
 
-  const getPosts = async () => {
-    const data = await getDocs(postsCollectionRef);
-    setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
-
   useEffect(() => {
-    getPosts();
+    const q = query(collection(db, "posts"), orderBy("createdAt"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let posts = [];
+      querySnapshot.forEach((doc) => {
+        posts.push({ ...doc.data(), id: doc.id });
+      });
+      setPosts(posts);
+    });
+    return () => unsubscribe();
   }, []);
   const handleCreatePost = async (e) => {
     e.preventDefault();
-    const newDoc = {
+    setInput("");
+    await addDoc(postsCollectionRef, {
       name: "Dimitar Sabev(ADMIN)",
       message: input,
       photoUrl: "",
       createdAt: Timestamp.now().toDate().toDateString(),
-    };
-    await addDoc(postsCollectionRef, newDoc);
-    setInput("");
-    window.location.reload();
+    });
   };
   return (
     <div className="feed">
