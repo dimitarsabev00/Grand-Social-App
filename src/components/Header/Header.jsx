@@ -8,7 +8,16 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import ChatIcon from "@mui/icons-material/Chat";
+import { useDispatch } from "react-redux";
+import { logout } from "../../app/features/userSlice";
+import { signOut } from "firebase/auth";
+import { auth } from "../../configs/firebase";
 const Header = () => {
+  const dispatch = useDispatch();
+  const logoutOfApp = () => {
+    dispatch(logout());
+    signOut(auth);
+  };
   return (
     <div className="header">
       <div className="header_left">
@@ -30,6 +39,7 @@ const Header = () => {
         <HeaderOption
           avatar="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
           title="Me"
+          OnClick={logoutOfApp}
         />
       </div>
     </div>
