@@ -1,4 +1,7 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../app/features/userSlice";
@@ -8,7 +11,21 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      alert("Please enter your email & password");
+    }
+
+    signInWithEmailAndPassword(auth, email, password).then((userAuth) => {
+      dispatch(
+        login({
+          email: userAuth.user.email,
+          uid: userAuth.user.uid,
+        })
+      );
+    });
+  };
   const register = () => {
     if (!email || !password) {
       alert("Please enter your email & password");
@@ -29,7 +46,7 @@ const Auth = () => {
   };
   return (
     <div className="auth">
-      <form>
+      <form onSubmit={handleLogin}>
         <input
           type="email"
           name=""
