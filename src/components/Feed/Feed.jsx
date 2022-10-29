@@ -7,10 +7,10 @@ import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import CalendarViewDayIcon from "@mui/icons-material/CalendarViewDay";
 import Post from "../Post/Post";
+import FlipMove from "react-flip-move";
 import {
   addDoc,
   collection,
-  getDocs,
   Timestamp,
   onSnapshot,
   query,
@@ -71,17 +71,19 @@ const Feed = () => {
           />
         </div>
       </div>
-      {posts &&
-        posts.map(({ id, name, createdAt, message }) => {
-          return (
-            <Post
-              key={id}
-              name={name}
-              description={createdAt}
-              message={message}
-            />
-          );
-        })}
+      <FlipMove>
+        {posts &&
+          posts.map(({ id, name, createdAt, message }) => {
+            return (
+              <Post
+                key={id}
+                name={name}
+                description={createdAt}
+                message={message}
+              />
+            );
+          })}
+      </FlipMove>
     </div>
   );
 };
