@@ -23,7 +23,7 @@ const Feed = () => {
   const postsCollectionRef = collection(db, "posts");
 
   useEffect(() => {
-    const q = query(collection(db, "posts"), orderBy("createdAt"));
+    const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let posts = [];
       querySnapshot.forEach((doc) => {
