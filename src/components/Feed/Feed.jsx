@@ -47,7 +47,10 @@ const Feed = () => {
     <div className="feed">
       <div className="feed_inputContainer">
         <div className="feed_input">
-          <CreateIcon />
+          <img
+            src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
+            alt=""
+          />
           <form onSubmit={handleCreatePost}>
             <input
               value={input}
