@@ -1,6 +1,8 @@
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithRedirect,
 } from "firebase/auth";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,6 +21,23 @@ const Auth = () => {
     }
 
     signInWithEmailAndPassword(auth, email, password)
+      .then((userAuth) => {
+        dispatch(
+          login({
+            email: userAuth.user.email,
+            uid: userAuth.user.uid,
+          })
+        );
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+  const handleSignInWithGoogle = (e) => {
+    e.preventDefault();
+
+    const provider = new GoogleAuthProvider();
+    signInWithRedirect(auth, provider)
       .then((userAuth) => {
         dispatch(
           login({
@@ -82,7 +101,7 @@ const Auth = () => {
       </p>
 
       <form className="form_wrapper">
-        <div className="google_btn_wrapper">
+        <div className="google_btn_wrapper" onClick={handleSignInWithGoogle}>
           <img
             src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
             style={{ width: "50px", height: "50px" }}
