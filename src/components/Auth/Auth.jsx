@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../app/features/userSlice";
 import { auth } from "../../configs/firebase";
+
 import "./Auth.css";
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -79,6 +80,16 @@ const Auth = () => {
           Register Now
         </span>
       </p>
+
+      <form className="form_wrapper">
+        <div className="google_btn_wrapper">
+          <img
+            src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+            style={{ width: "50px", height: "50px" }}
+          />
+          Sign in with Google
+        </div>
+      </form>
     </div>
   );
 };
