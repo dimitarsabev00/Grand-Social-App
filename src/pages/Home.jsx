@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../configs/firebase";
 import { login, logout, selectUser } from "../app/features/userSlice";
-import AuthHeader from "./Auth/Auth";
-import Feed from "./Feed/Feed";
-import Header from "./Header/Header";
-import SideBar from "./SideBar/SideBar";
-import Welcome from "./AuthHeader/AuthHeader";
+import AuthHeader from "../components/Auth/Auth";
+import Feed from "../components/Feed/Feed";
+import Header from "../components/Header/Header";
+import SideBar from "../components/SideBar/SideBar";
+import Welcome from "../components/AuthHeader/AuthHeader";
 const Home = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
