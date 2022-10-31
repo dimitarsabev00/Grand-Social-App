@@ -6,7 +6,11 @@
   text-align: center;
   height: fit-content;
 }
-
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}
 .sidebar_avatar {
   margin-bottom: 10px;
 }
