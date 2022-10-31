@@ -33,10 +33,11 @@ const Home = () => {
       {!user ? (
         <AuthHeader />
       ) : (
-        <div className="app_body_wrapper">
-          <div className="app_body">
+        <div className="app_layout_wrapper">
+          <div className="app_layout">
             <SideBar />
             <Feed />
+            {/* Widgets */}
           </div>
         </div>
       )}

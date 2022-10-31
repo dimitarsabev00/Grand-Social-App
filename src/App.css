@@ -4,11 +4,11 @@
   flex-direction: column;
   align-items: center;
 }
-.app_body {
+.app_layout {
   display: flex;
   margin: 35px 20px 0 20px;
   max-width: 1200px;
 }
-.app_body_wrapper {
+.app_layout_wrapper {
   background-color: #f3f2ef;
 }
