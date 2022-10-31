@@ -22,6 +22,15 @@
 }
 .post_body {
   overflow-wrap: anywhere;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+.post_body > img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }
 .post_buttons {
   display: flex;

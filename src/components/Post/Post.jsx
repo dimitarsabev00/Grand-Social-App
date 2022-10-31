@@ -22,6 +22,10 @@ const Post = forwardRef(({ name, description, message, photoUrl }, ref) => {
       </div>
       <div className="post_body">
         <p>{message}</p>
+        <img
+          src="https://celebrityaccess.com/wp-content/uploads/2018/10/instagram.jpg"
+          alt=""
+        />
       </div>
       <div className="post_buttons">
         <InputOption Icon={ThumbUpOffAltIcon} title="Like" color="gray" />
