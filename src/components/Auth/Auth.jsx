@@ -100,7 +100,7 @@ const Auth = () => {
         </span>
       </p>
 
-      <form className="form_wrapper">
+      {/* <form className="form_wrapper">
         <div className="google_btn_wrapper" onClick={handleSignInWithGoogle}>
           <img
             src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
@@ -108,7 +108,7 @@ const Auth = () => {
           />
           Sign in with Google
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };
