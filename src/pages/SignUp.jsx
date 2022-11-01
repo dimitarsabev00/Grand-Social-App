@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../app/features/userSlice";
 import { auth } from "../configs/firebase";
 const SignUp = () => {
-  const [username, setUsername] = useState("");
+  //   const [username, setUsername] = useState("");
   //   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,7 +62,7 @@ const SignUp = () => {
           </h1>
           {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
           <form onSubmit={handleSignUp}>
-            <input
+            {/* <input
               aria-label="Enter your username"
               type="text"
               placeholder="Username"
@@ -71,7 +71,7 @@ const SignUp = () => {
                 setUsername(e.target.value);
               }}
               value={username}
-            />
+            /> */}
             {/* <input
               aria-label="Enter your full name"
               type="text"
