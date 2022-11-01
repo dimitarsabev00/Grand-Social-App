@@ -1,42 +1,59 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import React from "react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../app/features/userSlice";
-import { auth } from "../configs/firebase";
+import { auth, db } from "../configs/firebase";
 const SignUp = () => {
-  //   const [username, setUsername] = useState("");
-  //   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const isInvalid = password == "" || email == "";
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       alert("Please enter your email & password");
     }
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userAuth) => {
-        dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
-          })
-        );
-
-        navigate("/");
-      })
-
-      .catch((error) => {
-        setEmail("");
-        setPassword("");
-        setError(error.message);
+      await updateProfile(user, {
+        displayName: username,
       });
+      const usersCollectionRef = collection(db, "users");
+      await addDoc(usersCollectionRef, {
+        userId: user.uid,
+        username,
+        fullName,
+        email,
+        following: [],
+        dataCreated: Timestamp.now().toDate().toDateString(),
+      });
+      dispatch(
+        login({
+          email: user.email,
+          uid: user.uid,
+          username: user.displayName,
+          fullName,
+        })
+      );
+      navigate("/");
+    } catch (error) {
+      setUsername("");
+      setFullName("");
+      setEmail("");
+      setPassword("");
+      setError(error.message);
+    }
   };
 
   useEffect(() => {
@@ -45,12 +62,12 @@ const SignUp = () => {
 
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen ">
-      <div className="flex w-3/5 ">
+      {/* <div className="flex w-3/5 ">
         <img
           src="https://media.istockphoto.com/vectors/camera-icon-simple-style-isolated-vector-illustration-on-white-vector-id1278996256?k=20&m=1278996256&s=612x612&w=0&h=bTKSsWlqGPZKZL4b-JCwU825aHySeU88-ZNFm8LFOsc="
           alt=""
         />
-      </div>
+      </div> */}
       <div className="flex flex-col w-2/5">
         <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
           <h1 className="flex justify-center w-full">
@@ -62,7 +79,7 @@ const SignUp = () => {
           </h1>
           {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
           <form onSubmit={handleSignUp}>
-            {/* <input
+            <input
               aria-label="Enter your username"
               type="text"
               placeholder="Username"
@@ -71,8 +88,8 @@ const SignUp = () => {
                 setUsername(e.target.value);
               }}
               value={username}
-            /> */}
-            {/* <input
+            />
+            <input
               aria-label="Enter your full name"
               type="text"
               placeholder="Full Name"
@@ -81,7 +98,7 @@ const SignUp = () => {
                 setFullName(e.target.value);
               }}
               value={fullName}
-            /> */}
+            />
             <input
               aria-label="Enter your email address"
               type="text"
