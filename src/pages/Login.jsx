@@ -66,6 +66,7 @@ const Login = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              value={email}
             />
             <input
               aria-label="Enter your password"
@@ -75,6 +76,7 @@ const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              value={password}
             />
             <button
               disabled={isInvalid}
