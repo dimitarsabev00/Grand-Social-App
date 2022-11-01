@@ -12,11 +12,14 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../app/features/userSlice";
 import { signOut } from "firebase/auth";
 import { auth } from "../../configs/firebase";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const logoutOfApp = () => {
     dispatch(logout());
     signOut(auth);
+    navigate("/login");
   };
 
   return (
