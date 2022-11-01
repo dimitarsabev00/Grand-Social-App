@@ -18,11 +18,12 @@ const Login = () => {
       alert("Please enter your email & password");
     }
     try {
-      const userAuth = await signInWithEmailAndPassword(auth, email, password);
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
       dispatch(
         login({
-          email: userAuth.user.email,
-          uid: userAuth.user.uid,
+          email: user.email,
+          uid: user.uid,
+          username: user.displayName,
         })
       );
       navigate("/");
