@@ -12,27 +12,25 @@ const Login = () => {
   const isInvalid = password == "" || email == "";
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       alert("Please enter your email & password");
     }
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userAuth) => {
-        dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
-          })
-        );
-        navigate("/");
-      })
-      .catch((error) => {
-        setEmail("");
-        setPassword("");
-        setError(error.message);
-      });
+    try {
+      const userAuth = await signInWithEmailAndPassword(auth, email, password);
+      dispatch(
+        login({
+          email: userAuth.user.email,
+          uid: userAuth.user.uid,
+        })
+      );
+      navigate("/");
+    } catch (error) {
+      setEmail("");
+      setPassword("");
+      setError(error.message);
+    }
   };
 
   useEffect(() => {
@@ -41,12 +39,12 @@ const Login = () => {
 
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen ">
-      <div className="flex w-3/5 ">
+      {/* <div className="flex w-3/5 ">
         <img
           src="https://media.istockphoto.com/vectors/camera-icon-simple-style-isolated-vector-illustration-on-white-vector-id1278996256?k=20&m=1278996256&s=612x612&w=0&h=bTKSsWlqGPZKZL4b-JCwU825aHySeU88-ZNFm8LFOsc="
           alt=""
         />
-      </div>
+      </div> */}
       <div className="flex flex-col w-2/5">
         <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
           <h1 className="flex justify-center w-full">
