@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../app/features/userSlice";
 import { auth, db } from "../configs/firebase";
+import { doesUsernameExist } from "../services/firebase";
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -19,40 +20,46 @@ const SignUp = () => {
     if (!email || !password) {
       alert("Please enter your email & password");
     }
-    try {
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+    const usernameExists = await doesUsernameExist(username);
 
-      await updateProfile(user, {
-        displayName: username,
-      });
-      const usersCollectionRef = collection(db, "users");
-      await addDoc(usersCollectionRef, {
-        userId: user.uid,
-        username,
-        fullName,
-        email,
-        following: [],
-        dataCreated: Timestamp.now().toDate().toDateString(),
-      });
-      dispatch(
-        login({
-          email: user.email,
-          uid: user.uid,
-          username: user.displayName,
+    if (usernameExists?.[0] !== false) {
+      try {
+        const { user } = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        await updateProfile(user, {
+          displayName: username,
+        });
+        const usersCollectionRef = collection(db, "users");
+        await addDoc(usersCollectionRef, {
+          userId: user.uid,
+          username,
           fullName,
-        })
-      );
-      navigate("/");
-    } catch (error) {
-      setUsername("");
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setError(error.message);
+          email,
+          following: [],
+          dataCreated: Timestamp.now().toDate().toDateString(),
+        });
+        dispatch(
+          login({
+            email: user.email,
+            uid: user.uid,
+            username: user.displayName,
+            fullName,
+          })
+        );
+        navigate("/");
+      } catch (error) {
+        setUsername("");
+        setFullName("");
+        setEmail("");
+        setPassword("");
+        setError(error.message);
+      }
+    } else {
+      setError("That username is already taken, please try another.");
     }
   };
 
