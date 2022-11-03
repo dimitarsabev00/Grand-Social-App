@@ -1,19 +1,16 @@
-import React from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { auth } from "../configs/firebase";
-import { login, logout, selectUser } from "../app/features/userSlice";
-import AuthHeader from "../components/Auth/Auth";
+import { login, logout } from "../app/features/userSlice";
 import Feed from "../components/Feed/Feed";
 import Header from "../components/Header/Header";
 import SideBar from "../components/SideBar/SideBar";
-import Welcome from "../components/AuthHeader/AuthHeader";
 const Home = () => {
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    document.title = "Social Media App";
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         dispatch(
@@ -28,15 +25,14 @@ const Home = () => {
     });
   }, []);
   return (
-    <div className="app">
+    <div className="bg-gray-background">
       <Header />
 
-      <div className="app_layout_wrapper">
-        <div className="app_layout">
-          <SideBar />
-          <Feed />
-          {/* Widgets */}
-        </div>
+      <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
+        <p>Im Feed</p>
+        <p>Im SideBar</p>
+        {/* <Feed /> */}
+        {/* <SideBar /> */}
       </div>
     </div>
   );
