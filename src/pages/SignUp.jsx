@@ -22,7 +22,7 @@ const SignUp = () => {
     }
     const usernameExists = await doesUsernameExist(username);
 
-    if (usernameExists?.[0] !== false) {
+    if (!usernameExists.length) {
       try {
         const { user } = await createUserWithEmailAndPassword(
           auth,
