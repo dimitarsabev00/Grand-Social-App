@@ -40,6 +40,7 @@ const SignUp = () => {
           fullName,
           email,
           following: [],
+          followers: [],
           dataCreated: Timestamp.now().toDate().toDateString(),
         });
         dispatch(
