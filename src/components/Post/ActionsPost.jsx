@@ -5,7 +5,7 @@ import { selectUser } from "../../app/features/userSlice";
 import { db } from "../../configs/firebase";
 
 const ActionsPost = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
-  const { uid } = useSelector(selectUser);
+  const user = useSelector(selectUser);
   const [toggleLiked, setToggleLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const handleToggleLiked = async () => {
@@ -13,7 +13,7 @@ const ActionsPost = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
 
     const userDoc = doc(db, "posts", docId);
     const newField = {
-      likes: toggleLiked ? arrayRemove(uid) : arrayUnion(uid),
+      likes: toggleLiked ? arrayRemove(user?.uid) : arrayUnion(user?.uid),
       userLikedPhoto: !toggleLiked,
     };
     await updateDoc(userDoc, newField);
