@@ -11,18 +11,18 @@ const Home = () => {
 
   useEffect(() => {
     document.title = "Social Media App";
-    onAuthStateChanged(auth, (userAuth) => {
-      if (userAuth) {
-        dispatch(
-          login({
-            email: userAuth.email,
-            uid: userAuth.uid,
-          })
-        );
-      } else {
-        dispatch(logout());
-      }
-    });
+    // onAuthStateChanged(auth, (userAuth) => {
+    //   if (userAuth) {
+    //     dispatch(
+    //       login({
+    //         email: userAuth.email,
+    //         uid: userAuth.uid,
+    //       })
+    //     );
+    //   } else {
+    //     dispatch(logout());
+    //   }
+    // });
   }, []);
   return (
     <div className="bg-gray-background">
