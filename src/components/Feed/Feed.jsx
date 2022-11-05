@@ -59,6 +59,7 @@ const Feed = () => {
               docId={post.id}
               totalLikes={post.likes.length}
               likedPhoto={post.userLikedPhoto}
+              description={post.description}
             />
           );
         })

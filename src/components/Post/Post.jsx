@@ -9,7 +9,14 @@ import HeaderPost from "./HeaderPost";
 import ImagePost from "./ImagePost";
 import ActionsPost from "./ActionsPost";
 import { useRef } from "react";
-const Post = ({ authorUsername, docId, totalLikes, likedPhoto }) => {
+import FooterPost from "./FooterPost";
+const Post = ({
+  authorUsername,
+  docId,
+  totalLikes,
+  likedPhoto,
+  description,
+}) => {
   const commentInput = useRef(null);
   const handleFocus = () => commentInput.current.focus();
   return (
@@ -22,6 +29,7 @@ const Post = ({ authorUsername, docId, totalLikes, likedPhoto }) => {
         likedPhoto={likedPhoto}
         handleFocus={handleFocus}
       />
+      <FooterPost description={description} authorUsername={authorUsername} />
     </div>
   );
 };
