@@ -31,7 +31,7 @@ const ActionsPost = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
             stroke-width="1.5"
             stroke="currentColor"
             class="w-6 h-6"
-            className={`w-8 mr-4 select-none cursor-pointer ${
+            className={`w-6 mr-4 select-none cursor-pointer ${
               toggleLiked ? "fill-red text-red-primary" : "text-black-light"
             }`}
           >
@@ -42,13 +42,14 @@ const ActionsPost = ({ docId, totalLikes, likedPhoto, handleFocus }) => {
             />
           </svg>
           <svg
-            className="w-8 text-black-light select-none cursor-pointer"
+            onClick={handleFocus}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
             class="w-6 h-6"
+            className="w-6 text-black-light select-none cursor-pointer"
           >
             <path
               stroke-linecap="round"
