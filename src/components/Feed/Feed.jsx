@@ -30,7 +30,7 @@ const Feed = () => {
 
   const getPosts = async () => {
     const data = await getDocs(postsCollectionRef);
-    setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setPosts(data.docs.map((doc) => ({ ...doc.data(), docId: doc.id })));
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Feed = () => {
       comments: [],
       userLikedPhoto: false,
       imageUrl: "",
-      dateCreated: Timestamp.now().toDate().toDateString(),
+      dateCreated: Date.now(),
     });
   };
   return (
@@ -56,10 +56,12 @@ const Feed = () => {
           return (
             <Post
               authorUsername={post.authorUsername}
-              docId={post.id}
+              docId={post.docId}
               totalLikes={post.likes.length}
               likedPhoto={post.userLikedPhoto}
               description={post.description}
+              comments={post.comments}
+              posted={post.dateCreated}
             />
           );
         })
