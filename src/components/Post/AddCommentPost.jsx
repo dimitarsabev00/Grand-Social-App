@@ -6,17 +6,17 @@ import { db } from "../../configs/firebase";
 
 const AddCommentPost = ({ docId, comments, setComments, commentInput }) => {
   const [comment, setComment] = useState("");
-  const { username } = useSelector(selectUser);
+  const user = useSelector(selectUser);
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
 
-    setComments([...comments, { username, comment }]);
+    setComments([...comments, { username: user.username, comment }]);
     setComment("");
 
     const postDoc = doc(db, "posts", docId);
     const newField = {
-      comments: arrayUnion({ username, comment }),
+      comments: arrayUnion({ username: user.username, comment }),
     };
     await updateDoc(postDoc, newField);
   };
