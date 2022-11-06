@@ -3,6 +3,9 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import useAuthListener from "./hooks/useAuthListener";
+import ReactLoader from "./components/loader";
+
+const Profile = lazy(() => import("./components/Profile/Profile"));
 const Home = lazy(() => import("./pages/Home"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Login = lazy(() => import("./pages/Login"));
@@ -11,7 +14,7 @@ function App() {
   const { user } = useAuthListener();
   return (
     <Router>
-      <Suspense fallback={<p>Loading..</p>}>
+      <Suspense fallback={<ReactLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
