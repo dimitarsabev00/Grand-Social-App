@@ -3,9 +3,10 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import useAuthListener from "./hooks/useAuthListener";
+import PrivateRoutes from "./helpers/PrivateRoute";
 import ReactLoader from "./components/loader";
 
-const Profile = lazy(() => import("./components/Profile/Profile"));
+const Profile = lazy(() => import("./pages/Profile"));
 const Home = lazy(() => import("./pages/Home"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Login = lazy(() => import("./pages/Login"));
@@ -16,11 +17,13 @@ function App() {
     <Router>
       <Suspense fallback={<ReactLoader />}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Home />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
-          {/* <Route path="/profile/:username" element={<ProfilePage />} /> */}
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/not-found" element={<ErrorPage />} />
         </Routes>
       </Suspense>
     </Router>
