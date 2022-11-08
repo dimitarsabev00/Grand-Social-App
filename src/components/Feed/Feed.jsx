@@ -1,22 +1,6 @@
 import { useEffect, useState } from "react";
-import CreateIcon from "@mui/icons-material/Create";
-import "./Feed.css";
-import InputOption from "../InputOption/InputOption";
-import ImageIcon from "@mui/icons-material/Image";
-import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
-import EventNoteIcon from "@mui/icons-material/EventNote";
-import CalendarViewDayIcon from "@mui/icons-material/CalendarViewDay";
 import Post from "../Post/Post";
-import FlipMove from "react-flip-move";
-import {
-  addDoc,
-  collection,
-  Timestamp,
-  onSnapshot,
-  query,
-  orderBy,
-  getDocs,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../configs/firebase";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -71,52 +55,6 @@ const Feed = () => {
       )}
     </div>
   );
-  // return (
-  //   <div className="feed">
-  //     <div className="feed_inputContainer">
-  //       <div className="feed_input">
-  //         <img
-  //           src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
-  //           alt=""
-  //         />
-  //         <form onSubmit={handleCreatePost}>
-  //           <input
-  //             value={input}
-  //             type="text"
-  //             placeholder="Start a post"
-  //             onChange={(e) => {
-  //               setInput(e.target.value);
-  //             }}
-  //           />
-  //           <button type="submit">Send</button>
-  //         </form>
-  //       </div>
-  //       <div className="feed_inputOptions">
-  //         <InputOption Icon={ImageIcon} title="Photo" color="#70b5f9" />
-  //         <InputOption Icon={SubscriptionsIcon} title="Video" color="#e7a33e" />
-  //         <InputOption Icon={EventNoteIcon} title="Event" color="#c0cbcd" />
-  //         <InputOption
-  //           Icon={CalendarViewDayIcon}
-  //           title="Write article"
-  //           color="#7fc15e"
-  //         />
-  //       </div>
-  //     </div>
-  //     <FlipMove>
-  //       {posts &&
-  //         posts.map(({ id, name, createdAt, message }) => {
-  //           return (
-  // <Post
-  //   key={id}
-  //   name={name}
-  //   description={createdAt}
-  //   message={message}
-  // />
-  //           );
-  //         })}
-  //     </FlipMove>
-  //   </div>
-  // );
 };
 
 export default Feed;
