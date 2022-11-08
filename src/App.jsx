@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import useAuthListener from "./hooks/useAuthListener";
-import ReactLoader from "./ReactLoader/loader";
+import ReactLoader from "./components/ReactLoader/loader";
 
 const Profile = lazy(() => import("./pages/Profile"));
 const Home = lazy(() => import("./pages/Home"));
