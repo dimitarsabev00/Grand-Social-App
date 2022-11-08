@@ -6,12 +6,15 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../app/features/userSlice";
+import useUser from "../../hooks/useUser";
 const Feed = () => {
   const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
+  const {
+    user: { following },
+  } = useUser();
   const postsCollectionRef = collection(db, "posts");
   const user = useSelector(selectUser);
-
   const getPosts = async () => {
     const data = await getDocs(postsCollectionRef);
     setPosts(data.docs.map((doc) => ({ ...doc.data(), docId: doc.id })));
@@ -36,7 +39,13 @@ const Feed = () => {
   };
   return (
     <div className="container col-span-2">
-      {posts.length ? (
+      {following === undefined ? (
+        <Skeleton count={2} width={640} height={500} className="mb-5" />
+      ) : following.length === 0 ? (
+        <p className="flex justify-center font-bold">
+          Follow other people to see Posts
+        </p>
+      ) : posts.length ? (
         posts.map((post) => {
           return (
             <Post
@@ -50,9 +59,7 @@ const Feed = () => {
             />
           );
         })
-      ) : (
-        <Skeleton count={1} width={640} height={400} className="mb-5" />
-      )}
+      ) : null}
     </div>
   );
 };
