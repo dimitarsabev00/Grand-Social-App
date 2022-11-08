@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from "react";
 import { getUserPostsByUsername } from "../../services/firebase";
 import HeaderUserProfile from "./HeaderUserProfile";
+import PostsUserProfile from "./PostsUserProfile";
 
 const UserProfile = ({ user }) => {
   const reducer = (state, newState) => ({ ...state, ...newState });
@@ -35,6 +36,7 @@ const UserProfile = ({ user }) => {
         followerCount={followerCount}
         setFollowerCount={dispatch}
       />
+      <PostsUserProfile posts={postsCollection} />
     </div>
   );
 };
