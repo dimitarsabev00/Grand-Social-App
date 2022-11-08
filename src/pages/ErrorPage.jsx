@@ -1,12 +1,13 @@
 import { useEffect } from "react";
-
+import Header from "../components/Header/Header";
 const ErrorPage = () => {
   useEffect(() => {
     document.title = "Not Found! - Page";
   }, []);
 
   return (
-    <div className="bg-gray-background">
+    <div>
+      <Header />
       <div className="mx-auth max-w-screen-lg">
         <p className="text-center text-2x1">Not Found!</p>
       </div>
