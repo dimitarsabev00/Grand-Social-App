@@ -36,9 +36,7 @@ const HeaderUserProfile = ({
   const handleToggleFollow = () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
     setFollowerCount({
-      followerCount: isFollowingProfile
-        ? followers.length - 1
-        : followers.length + 1,
+      followerCount: isFollowingProfile ? followerCount - 1 : followerCount + 1,
     });
   };
   return (
@@ -74,9 +72,9 @@ const HeaderUserProfile = ({
                 <span className="font-bold">{postsCount}</span> posts
               </p>
               <p className="mr-10">
-                <span className="font-bold">{followers?.length}</span>
+                <span className="font-bold">{followerCount}</span>
                 {` `}
-                {followers.length === 1 ? `follower` : `followers`}
+                {followerCount === 1 ? `follower` : `followers`}
               </p>
               <p className="mr-10">
                 <span className="font-bold">{following?.length}</span> following
