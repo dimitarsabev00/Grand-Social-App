@@ -137,3 +137,29 @@ export async function toggleFollow(
     isFollowingProfile
   );
 }
+
+export async function getPosts(userId, following) {
+  const coll = collection(db, "posts");
+  const q = query(coll, where("userId", "in", following));
+
+  const querySnapshot = await getDocs(q);
+
+  const userFollowedPosts = querySnapshot.docs.map((post) => ({
+    ...post.data(),
+    docId: post.id,
+  }));
+
+  const postsWithUserDetails = await Promise.all(
+    userFollowedPosts.map(async (post) => {
+      let userLikedPost = false;
+      if (post.likes.includes(userId)) {
+        userLikedPost = true;
+      }
+      const user = await getUserByUserId(post.userId);
+      const { username } = user[0];
+      return { username, ...post, userLikedPost };
+    })
+  );
+
+  return postsWithUserDetails;
+}
