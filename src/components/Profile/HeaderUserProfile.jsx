@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useUser from "../../hooks/useUser";
-import { isUserFollowingProfile } from "../../services/firebase";
+import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 const HeaderUserProfile = ({
   postsCount,
   profile: {
@@ -33,11 +33,18 @@ const HeaderUserProfile = ({
     }
   }, [user.username, profileUserId]);
 
-  const handleToggleFollow = () => {
+  const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
     setFollowerCount({
       followerCount: isFollowingProfile ? followerCount - 1 : followerCount + 1,
     });
+    await toggleFollow(
+      isFollowingProfile,
+      user.docId,
+      profileDocId,
+      profileUserId,
+      user.userId
+    );
   };
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
