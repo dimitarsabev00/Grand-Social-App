@@ -47,6 +47,7 @@ const Feed = () => {
       userLikedPhoto: false,
       imageUrl: "",
       dateCreated: Date.now(),
+      userId: user.uid,
     });
   };
   return (
