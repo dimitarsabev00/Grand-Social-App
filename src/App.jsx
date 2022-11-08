@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import useAuthListener from "./hooks/useAuthListener";
-import PrivateRoutes from "./helpers/PrivateRoute";
 import ReactLoader from "./ReactLoader/loader";
 
 const Profile = lazy(() => import("./pages/Profile"));
