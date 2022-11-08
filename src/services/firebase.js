@@ -85,3 +85,35 @@ export async function updateFollowedUserFollowers(
   };
   await updateDoc(userDoc, newField);
 }
+
+export async function getUserPostsByUsername(username) {
+  const [user] = await getUserByUsername(username);
+  const coll = collection(db, "posts");
+  const q = query(coll, where("userId", "==", user.userId));
+
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+}
+
+export async function isUserFollowingProfile(
+  loggedInUserUsername,
+  profileUserId
+) {
+  const coll = collection(db, "users");
+  const q = query(
+    coll,
+    where("username", "==", loggedInUserUsername),
+    where("following", "array-contains", profileUserId)
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  const [response = {}] = querySnapshot.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+  return response.userId;
+}
