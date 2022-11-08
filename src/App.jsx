@@ -1,6 +1,11 @@
 import "./App.css";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { lazy, Suspense } from "react";
 import useAuthListener from "./hooks/useAuthListener";
 import PrivateRoutes from "./helpers/PrivateRoute";
@@ -17,12 +22,29 @@ function App() {
     <Router>
       <Suspense fallback={<ReactLoader />}>
         <Routes>
-          <Route element={<PrivateRoutes />}>
-            <Route path="/" element={<Home />} />
-          </Route>
+          <Route
+            path="/"
+            element={
+              localStorage.getItem("userAuth") ? (
+                <Home />
+              ) : (
+                <Navigate replace to="/login" />
+              )
+            }
+          />
+
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/profile/:username" element={<Profile />} />
+          <Route
+            path="/profile/:username"
+            element={
+              localStorage.getItem("userAuth") ? (
+                <Profile />
+              ) : (
+                <Navigate replace to="/login" />
+              )
+            }
+          />
           <Route path="/not-found" element={<ErrorPage />} />
         </Routes>
       </Suspense>
