@@ -33,13 +33,13 @@ const Header = () => {
               <>
                 <Link to="/" aria-label="HomePage">
                   <svg
-                    className="w-8 mr-6 text-black-light cursor-pointer"
+                    className="w-8 mr-3 text-black-light cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-6 h-6"
+                    class="w-6 h-6 mr-3"
                   >
                     <path
                       stroke-linecap="round"
@@ -50,13 +50,13 @@ const Header = () => {
                 </Link>
                 <button type="button" title="Sign Out" onClick={logoutOfApp}>
                   <svg
-                    className="w-8 mr-6 text-black-light cursor-pointer"
+                    className="w-8 mr-3 text-black-light cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-6 h-6"
+                    class="w-6 h-6 mr-3"
                   >
                     <path
                       stroke-linecap="round"
