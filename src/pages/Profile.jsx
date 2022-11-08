@@ -21,7 +21,7 @@ const Profile = () => {
   }, [username, navigate]);
 
   return user?.username ? (
-    <div className="bg-gray-background">
+    <div>
       <Header />
       <div className="mx-auto max-w-screen-lg">
         <UserProfile user={user} />
