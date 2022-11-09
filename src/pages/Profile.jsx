@@ -11,7 +11,7 @@ const Profile = () => {
   useEffect(() => {
     const checkUserExist = async () => {
       const [user] = await getUserByUsername(username);
-      if (user.userId) {
+      if (user?.userId) {
         setUser(user);
       } else {
         navigate("/not-found");

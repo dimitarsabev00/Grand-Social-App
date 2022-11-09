@@ -19,7 +19,7 @@ const HeaderUserProfile = ({
 }) => {
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  const activeBtnFollow = user.username && user.username != profileUsername;
+  const activeBtnFollow = user?.username && user?.username !== profileUsername;
   useEffect(() => {
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(
@@ -28,10 +28,10 @@ const HeaderUserProfile = ({
       );
       setIsFollowingProfile(!!isFollowing);
     };
-    if (user.username && profileUserId) {
+    if (user?.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-  }, [user.username, profileUserId]);
+  }, [user?.username, profileUserId]);
 
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -48,13 +48,15 @@ const HeaderUserProfile = ({
   };
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
-      <div className="container flex justify-center">
-        {user.username && (
+      <div className="container flex justify-center items-center">
+        {profileUsername ? (
           <img
             src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
             alt={`${profileUsername} profile picture`}
             className="rounded-full h-40 w-40 flex"
           />
+        ) : (
+          <Skeleton circle height={150} width={150} count={1} />
         )}
       </div>
       <div className="flex items-center justify-center flex-col col-span-2">
