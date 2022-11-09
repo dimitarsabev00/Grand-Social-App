@@ -34,16 +34,7 @@ function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route
-            path="/profile/:username"
-            element={
-              localStorage.getItem("userAuth") ? (
-                <Profile />
-              ) : (
-                <Navigate replace to="/login" />
-              )
-            }
-          />
+          <Route path="/profile/:username" element={<Profile />} />
           <Route path="/not-found" element={<ErrorPage />} />
         </Routes>
       </Suspense>
