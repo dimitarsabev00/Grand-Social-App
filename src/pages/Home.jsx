@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import Feed from "../components/Feed/Feed";
 import Header from "../components/Header/Header";
 import SideBar from "../components/SideBar/SideBar";
