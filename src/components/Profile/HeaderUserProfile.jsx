@@ -62,13 +62,20 @@ const HeaderUserProfile = ({
       <div className="flex items-center justify-center flex-col col-span-2">
         <div className="container flex items-center">
           <p className="text-2x1 mr-4">{profileUsername}</p>
-          {activeBtnFollow && (
+          {activeBtnFollow ? (
             <button
               className="bg-blue-medium font-bold text-sm rounded text-white w-20 h-8"
               type="button"
               onClick={handleToggleFollow}
             >
               {isFollowingProfile ? "Unfollow" : "Follow"}
+            </button>
+          ) : (
+            <button
+              className="text-sm rounded text-black font-semibold w-20 h-8 border border-gray-base"
+              type="button"
+            >
+              Edit profile
             </button>
           )}
         </div>
