@@ -84,7 +84,7 @@ const Login = () => {
                 isInvalid && "opacity-50"
               }`}
             >
-              Log In
+              Log in
             </button>
           </form>
         </div>
@@ -92,7 +92,7 @@ const Login = () => {
           <p className="text-sm">
             Don't have an account? {` `}
             <Link to="/sign-up" className="font-bold text-blue-medium">
-              Sign Up
+              Sign up
             </Link>
           </p>
         </div>
