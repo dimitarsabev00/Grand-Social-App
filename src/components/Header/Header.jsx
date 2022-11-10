@@ -3,8 +3,12 @@ import { logout, selectUser } from "../../app/features/userSlice";
 import { signOut } from "firebase/auth";
 import { auth } from "../../configs/firebase";
 import { Link, useNavigate } from "react-router-dom";
+import useUser from "../../hooks/useUser";
 const Header = () => {
   const user = useSelector(selectUser);
+  const {
+    user: { userAvatar },
+  } = useUser();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const logoutOfApp = () => {
@@ -12,7 +16,6 @@ const Header = () => {
     signOut(auth);
     navigate("/login");
   };
-
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
       <div className="container mx-auto max-w-screen-lg h-full">
@@ -68,7 +71,7 @@ const Header = () => {
                 <div className="flex items-center cursor-pointer">
                   <Link to={`/profile/${auth.currentUser.displayName}`}>
                     <img
-                      src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
+                      src={userAvatar}
                       className="rounded-full h-8 w-8 flex"
                       alt={`${auth.currentUser.displayName} profile`}
                     />

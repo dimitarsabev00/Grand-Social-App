@@ -32,6 +32,8 @@ const SignUp = () => {
 
         await updateProfile(user, {
           displayName: username,
+          photoURL:
+            "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
         });
         const usersCollectionRef = collection(db, "users");
         await addDoc(usersCollectionRef, {
@@ -39,6 +41,8 @@ const SignUp = () => {
           username,
           fullName,
           email,
+          userAvatar:
+            "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
           following: [],
           followers: [],
           dataCreated: Timestamp.now().toDate().toDateString(),
@@ -48,7 +52,7 @@ const SignUp = () => {
             email: user.email,
             uid: user.uid,
             username: user.displayName,
-            fullName,
+            avatar: user.photoURL,
           })
         );
         navigate("/");

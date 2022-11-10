@@ -51,7 +51,7 @@ const HeaderUserProfile = ({
       <div className="container flex justify-center items-center">
         {profileUsername ? (
           <img
-            src="http://s3.amazonaws.com/37assets/svn/765-default-avatar.png"
+            src={user.userAvatar}
             alt={`${profileUsername} profile picture`}
             className="rounded-full h-40 w-40 flex"
           />

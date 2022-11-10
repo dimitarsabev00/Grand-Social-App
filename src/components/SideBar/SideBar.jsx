@@ -8,13 +8,18 @@ const SideBar = () => {
   const user = useSelector(selectUser);
 
   const {
-    user: { docId, fullName, username, userId, following },
+    user: { docId, fullName, username, userId, following, userAvatar },
   } = useUser();
+
   return (
     <div className="p-4">
       {user ? (
         <>
-          <User username={username} fullName={fullName} />
+          <User
+            username={username}
+            fullName={fullName}
+            userAvatar={userAvatar}
+          />
           <Suggestions
             userId={userId}
             following={following}

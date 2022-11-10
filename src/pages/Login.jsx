@@ -24,6 +24,7 @@ const Login = () => {
           email: user.email,
           uid: user.uid,
           username: user.displayName,
+          avatar: user.photoURL,
         })
       );
       navigate("/");

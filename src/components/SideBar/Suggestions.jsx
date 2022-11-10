@@ -16,7 +16,6 @@ const Suggestions = ({ userId, following, loggedInUserDocId }) => {
       suggestedProfiles();
     }
   }, [userId]);
-
   return !profiles ? (
     <Skeleton count={1} height={150} className="mt-5 " />
   ) : profiles.length > 0 ? (
@@ -33,6 +32,7 @@ const Suggestions = ({ userId, following, loggedInUserDocId }) => {
             profileId={profile.userId}
             userId={userId}
             loggedInUserDocId={loggedInUserDocId}
+            profileAvatar={profile.userAvatar}
           />
         ))}
       </div>
