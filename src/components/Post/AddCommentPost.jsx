@@ -37,7 +37,7 @@ const AddCommentPost = ({ docId, comments, setComments, commentInput }) => {
           className="text-sm text-gray-base w-full mr-3 py-5 px-4"
           type="text"
           name="add-comment"
-          placeholder="Add a comment ..."
+          placeholder="Write a comment"
           value={comment}
           onChange={(e) => {
             setComment(e.target.value);
