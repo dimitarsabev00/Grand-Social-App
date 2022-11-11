@@ -8,7 +8,8 @@ import { auth, db } from "../configs/firebase";
 import { doesUsernameExist } from "../services/firebase";
 const SignUp = () => {
   const [username, setUsername] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -39,7 +40,8 @@ const SignUp = () => {
         await addDoc(usersCollectionRef, {
           userId: user.uid,
           username,
-          fullName,
+          firstName,
+          lastName,
           email,
           userAvatar:
             "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
@@ -58,7 +60,8 @@ const SignUp = () => {
         navigate("/");
       } catch (error) {
         setUsername("");
-        setFullName("");
+        setFirstName("");
+        setLastName("");
         setEmail("");
         setPassword("");
         setError(error.message);
@@ -104,14 +107,24 @@ const SignUp = () => {
               value={username}
             />
             <input
-              aria-label="Enter your full name"
+              aria-label="Enter your first name"
               type="text"
-              placeholder="Full Name"
+              placeholder="First Name"
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
               onChange={(e) => {
-                setFullName(e.target.value);
+                setFirstName(e.target.value);
               }}
-              value={fullName}
+              value={firstName}
+            />
+            <input
+              aria-label="Enter your last name"
+              type="text"
+              placeholder="Last Name"
+              className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
+              value={lastName}
             />
             <input
               aria-label="Enter your email address"
