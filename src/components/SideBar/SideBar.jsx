@@ -8,7 +8,15 @@ const SideBar = () => {
   const user = useSelector(selectUser);
 
   const {
-    user: { docId, fullName, username, userId, following, userAvatar },
+    user: {
+      docId,
+      firstName,
+      lastName,
+      username,
+      userId,
+      following,
+      userAvatar,
+    },
   } = useUser();
 
   return (
@@ -17,7 +25,7 @@ const SideBar = () => {
         <>
           <User
             username={username}
-            fullName={fullName}
+            fullName={`${firstName} ${lastName}`}
             userAvatar={userAvatar}
           />
           <Suggestions

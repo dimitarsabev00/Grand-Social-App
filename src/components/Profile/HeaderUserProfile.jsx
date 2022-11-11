@@ -8,18 +8,19 @@ const HeaderUserProfile = ({
   profile: {
     docId: profileDocId,
     userId: profileUserId,
-    fullName,
+    firstName,
+    lastName,
     followers = [],
     following = [],
     username: profileUsername,
   },
   followerCount,
   setFollowerCount,
-  loggedInUsername,
 }) => {
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
   const activeBtnFollow = user?.username && user?.username !== profileUsername;
+  const fullName = `${firstName} ${lastName}`;
   useEffect(() => {
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(
