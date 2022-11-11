@@ -2,7 +2,7 @@ import HeaderPost from "./HeaderPost";
 import ImagePost from "./ImagePost";
 import ActionsPost from "./ActionsPost";
 import { useRef } from "react";
-import FooterPost from "./FooterPost";
+import DescriptionPost from "./DescriptionPost";
 import CommentPost from "./CommentPost";
 const Post = ({
   authorUsername,
@@ -18,6 +18,7 @@ const Post = ({
   return (
     <div className="rounded col-span-4 border bg-white border-gray-primary mb-16">
       <HeaderPost authorUsername={authorUsername} />
+      <DescriptionPost description={description} />
       <ImagePost />
       <ActionsPost
         docId={docId}
@@ -25,7 +26,6 @@ const Post = ({
         likedPhoto={likedPhoto}
         handleFocus={handleFocus}
       />
-      <FooterPost description={description} authorUsername={authorUsername} />
       <CommentPost
         docId={docId}
         comments={comments}
