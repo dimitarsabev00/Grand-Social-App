@@ -19,18 +19,44 @@ const Header = () => {
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
       <div className="container mx-auto max-w-screen-lg h-full">
-        <div className="flex justify-between h-full">
+        <div className="flex justify-between items-center h-full">
           <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
-            <h1 className="flex justify-center w-full">
-              <Link to="/" aria-label="Social Media Logo">
-                <img
-                  src="https://media.istockphoto.com/vectors/camera-icon-simple-style-isolated-vector-illustration-on-white-vector-id1278996256?k=20&m=1278996256&s=612x612&w=0&h=bTKSsWlqGPZKZL4b-JCwU825aHySeU88-ZNFm8LFOsc="
-                  alt=""
-                  className="mt-2 w-1/12"
-                />
-              </Link>
-            </h1>
+            <Link to="/" aria-label="Social Media Logo">
+              <img
+                src="https://media.istockphoto.com/vectors/camera-icon-simple-style-isolated-vector-illustration-on-white-vector-id1278996256?k=20&m=1278996256&s=612x612&w=0&h=bTKSsWlqGPZKZL4b-JCwU825aHySeU88-ZNFm8LFOsc="
+                alt=""
+                className="w-10 h-10 mr-3"
+              />
+            </Link>
           </div>
+          <form action="">
+            <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="w-5 h-5 absolute ml-3 pointer-events-none"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                />
+              </svg>
+
+              <input
+                type="text"
+                placeholder="Search"
+                name="search"
+                aria-label="Search"
+                className="pr-3 pl-10 py-2 font-semibold placeholder-gray-base text-black-light rounded-lg border border-gray-base
+                h-8
+                "
+              />
+            </div>
+          </form>
           <div className="text-gray-700 text-center flex items-center align-items">
             {user ? (
               <>
