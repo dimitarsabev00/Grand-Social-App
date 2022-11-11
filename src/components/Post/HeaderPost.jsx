@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const HeaderPost = ({ authorUsername }) => {
   return (
-    <div className="flex justify-between items-center border-b border-gray-primary h-4 p-4 py-8">
+    <div className="flex justify-between items-center h-4 p-4 py-8">
       <div className="flex items-center">
         <Link to={`/profile/${authorUsername}`} className="flex items-center">
           <img
