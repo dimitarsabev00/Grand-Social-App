@@ -65,7 +65,7 @@ const HeaderUserProfile = ({
           <p className="text-2x1 mr-4">{profileUsername}</p>
           {activeBtnFollow ? (
             <button
-              className="bg-blue-medium font-bold text-sm rounded text-white w-20 h-8"
+              className="bg-blue-500 font-bold text-sm rounded text-white w-20 h-8"
               type="button"
               onClick={handleToggleFollow}
             >
@@ -73,7 +73,7 @@ const HeaderUserProfile = ({
             </button>
           ) : (
             <button
-              className="text-sm rounded text-black font-semibold w-20 h-8 border border-gray-base"
+              className="text-sm rounded text-black font-semibold w-20 h-8 border border-gray-500"
               type="button"
             >
               Edit profile
