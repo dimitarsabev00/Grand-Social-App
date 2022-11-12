@@ -4,7 +4,7 @@ import Header from "../components/Header/Header";
 import SideBar from "../components/SideBar/SideBar";
 const Home = () => {
   useEffect(() => {
-    document.title = "Social Media App";
+    document.title = "Grand Social";
   }, []);
   return (
     <div className="bg-gray-background">
