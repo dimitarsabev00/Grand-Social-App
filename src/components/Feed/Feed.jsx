@@ -3,6 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useUser from "../../hooks/useUser";
 import usePosts from "../../hooks/usePosts";
+import CreatePost from "./CreatePost";
 const Feed = () => {
   const { user } = useUser();
 
@@ -10,6 +11,7 @@ const Feed = () => {
 
   return (
     <div className="container col-span-2">
+      <CreatePost />
       {user.following === undefined ? (
         <Skeleton count={2} width={640} height={500} className="mb-5" />
       ) : user.following.length === 0 ? (
