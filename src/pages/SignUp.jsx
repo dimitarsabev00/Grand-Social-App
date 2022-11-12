@@ -48,6 +48,8 @@ const SignUp = () => {
           following: [],
           followers: [],
           dataCreated: Timestamp.now().toDate().toDateString(),
+          location: "",
+          bio: "",
         });
         dispatch(
           login({
@@ -86,7 +88,7 @@ const SignUp = () => {
         />
       </div> */}
       <div className="flex flex-col w-2/5">
-        <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
+        <div className="flex flex-col items-center bg-white p-4 border border-gray-300 mb-4 rounded">
           <h1 className="flex justify-center w-full">
             <img
               src="https://media.istockphoto.com/vectors/camera-icon-simple-style-isolated-vector-illustration-on-white-vector-id1278996256?k=20&m=1278996256&s=612x612&w=0&h=bTKSsWlqGPZKZL4b-JCwU825aHySeU88-ZNFm8LFOsc="
@@ -94,13 +96,13 @@ const SignUp = () => {
               className="mt-2 w-6/12 mb-4"
             />
           </h1>
-          {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
+          {error && <p className="mb-4 text-xs text-red-500">{error}</p>}
           <form onSubmit={handleSignUp}>
             <input
               aria-label="Enter your username"
               type="text"
               placeholder="Username"
-              className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
@@ -110,7 +112,7 @@ const SignUp = () => {
               aria-label="Enter your first name"
               type="text"
               placeholder="First Name"
-              className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
               onChange={(e) => {
                 setFirstName(e.target.value);
               }}
@@ -120,7 +122,7 @@ const SignUp = () => {
               aria-label="Enter your last name"
               type="text"
               placeholder="Last Name"
-              className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
               onChange={(e) => {
                 setLastName(e.target.value);
               }}
@@ -130,7 +132,7 @@ const SignUp = () => {
               aria-label="Enter your email address"
               type="text"
               placeholder="Email address"
-              className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -140,7 +142,7 @@ const SignUp = () => {
               aria-label="Enter your password"
               type="password"
               placeholder="Password"
-              className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
+              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -149,7 +151,7 @@ const SignUp = () => {
             <button
               disabled={isInvalid}
               type="submit"
-              className={`bg-blue-medium text-white w-full rounded h-8 font-bold ${
+              className={`bg-blue-500 text-white w-full rounded h-8 font-bold ${
                 isInvalid && "opacity-50"
               }`}
             >
@@ -157,10 +159,10 @@ const SignUp = () => {
             </button>
           </form>
         </div>
-        <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
+        <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-300">
           <p className="text-sm">
             Have an account? {` `}
-            <Link to="/login" className="font-bold text-blue-medium">
+            <Link to="/login" className="font-bold text-blue-500">
               Sign In
             </Link>
           </p>
