@@ -26,7 +26,7 @@ const CreatePost = () => {
   return (
     <div className="bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6 mb-9">
       <div className="flex space-x-4 p-4 items-center">
-        <img src={user.avatar} alt="" className="rounded-full w-16 mr-3" />
+        <img src={user?.avatar} alt="" className="rounded-full w-16 mr-3" />
         <form onSubmit={handleCreatePost} className="flex flex-1">
           <input
             type="text"
@@ -34,7 +34,7 @@ const CreatePost = () => {
               setInput(e.target.value);
             }}
             value={input}
-            placeholder={`What's in your mind ${user.username}?`}
+            placeholder={`What's in your mind ${user?.username}?`}
             className="rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none"
           />
           <button type="submit" className="hidden">
