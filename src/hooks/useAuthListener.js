@@ -21,6 +21,7 @@ const useAuthListener = () => {
             email: userAuth.email,
             uid: userAuth.uid,
             username: userAuth.displayName,
+            avatar: userAuth.photoURL,
           })
         );
       } else {
