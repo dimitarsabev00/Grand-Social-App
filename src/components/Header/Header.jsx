@@ -23,13 +23,13 @@ const Header = () => {
           <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
             <Link to="/" aria-label="Social Media Logo">
               <img
-                src="https://media.istockphoto.com/vectors/camera-icon-simple-style-isolated-vector-illustration-on-white-vector-id1278996256?k=20&m=1278996256&s=612x612&w=0&h=bTKSsWlqGPZKZL4b-JCwU825aHySeU88-ZNFm8LFOsc="
+                src="https://www.logo.wine/a/logo/Instagram/Instagram-Glyph-Black-Logo.wine.svg"
                 alt=""
                 className="w-10 h-10 mr-3"
               />
             </Link>
           </div>
-          <form action="">
+          <form>
             <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,8 +52,8 @@ const Header = () => {
                 name="search"
                 aria-label="Search"
                 className="pr-3 pl-10 py-2 font-semibold placeholder-gray-base text-black-light rounded-lg border border-gray-base
-                h-8
-                "
+          h-8
+          "
               />
             </div>
           </form>
