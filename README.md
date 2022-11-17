@@ -1,4 +1,4 @@
-# Blog-Post-App
+# Grand-Social-App
 
 ### Open Project - [https://grand-social.netlify.app/login](https://grand-social.netlify.app/login)
 
