@@ -3,20 +3,21 @@ import "react-loading-skeleton/dist/skeleton.css";
 const PostsUserProfile = ({ posts }) => {
   return (
     <div className="h-16 border-t border-gray-500 mt-12 pt-4">
-      <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
+      <div className="grid grid-cols-3 gap-4 mt-4 mb-12">
         {!posts ? (
           <>
             <Skeleton key={12} width={320} height={400} />
           </>
         ) : posts.length > 0 ? (
           posts.map((post) => (
-            <div key={post.docId} className="relative group">
+            <div key={post.docId} className="relative group rounded-md">
               <img
                 src="https://celebrityaccess.com/wp-content/uploads/2018/10/instagram.jpg"
                 alt={post.description}
+                className="rounded-md"
               />
 
-              <div className="absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden">
+              <div className="absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden rounded-md">
                 <p className="flex items-center text-white font-bold">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
