@@ -73,11 +73,12 @@ const HeaderUserProfile = ({
             </button>
           ) : (
             <button
-              className="text-sm rounded text-black font-semibold w-20 h-8 border border-gray-500"
+              className="text-sm rounded text-black font-semibold  border border-gray-500 p-1"
               type="button"
             >
               Edit profile
             </button>
+            
           )}
         </div>
         <div className="container flex mt-4">
