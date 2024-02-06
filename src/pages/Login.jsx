@@ -40,13 +40,7 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="container flex mx-auto max-w-screen-md items-center h-screen ">
-      {/* <div className="flex w-3/5 ">
-        <img
-          src="https://media.istockphoto.com/vectors/camera-icon-simple-style-isolated-vector-illustration-on-white-vector-id1278996256?k=20&m=1278996256&s=612x612&w=0&h=bTKSsWlqGPZKZL4b-JCwU825aHySeU88-ZNFm8LFOsc="
-          alt=""
-        />
-      </div> */}
+    <div className="container flex mx-auto max-w-screen-md items-center h-screen justify-center">
       <div className="flex flex-col w-2/5">
         <div className="flex flex-col items-center bg-white p-4 border border-gray-300 mb-4 rounded">
           <h1 className="flex justify-center w-full">
