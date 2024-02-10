@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
 import { selectUser } from "../../app/features/userSlice";
-import { auth } from "../../configs/firebase";
 import { Link } from "react-router-dom";
 import useLogout from "../../hooks/useLogout";
 const Header = () => {
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
 
   const { handleLogout } = useLogout();
 
@@ -52,7 +51,7 @@ const Header = () => {
             </div>
           </form>
           <div className="text-gray-700 text-center flex items-center align-items">
-            {user ? (
+            {currentUser ? (
               <>
                 <Link to="/" aria-label="HomePage">
                   <svg
@@ -106,11 +105,11 @@ const Header = () => {
                   </svg>
                 </button>
                 <div className="flex items-center cursor-pointer">
-                  <Link to={`/profile/${auth.currentUser.displayName}`}>
+                  <Link to={`/profile/${currentUser?.username}`}>
                     <img
-                      // src={userAvatar}
+                      src={currentUser?.photoURL}
                       className="rounded-full h-8 w-8 flex"
-                      alt={`${auth.currentUser.displayName} profile`}
+                      alt={`${currentUser?.username} profile`}
                     />
                   </Link>
                 </div>
