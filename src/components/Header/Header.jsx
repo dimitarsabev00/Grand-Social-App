@@ -1,21 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
-import { logout, selectUser } from "../../app/features/userSlice";
-import { signOut } from "firebase/auth";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../app/features/userSlice";
 import { auth } from "../../configs/firebase";
-import { Link, useNavigate } from "react-router-dom";
-import useUser from "../../hooks/useUser";
+import { Link } from "react-router-dom";
+import useLogout from "../../hooks/useLogout";
 const Header = () => {
   const user = useSelector(selectUser);
-  const {
-    user: { userAvatar },
-  } = useUser();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const logoutOfApp = () => {
-    dispatch(logout());
-    signOut(auth);
-    navigate("/login");
-  };
+
+  const { handleLogout } = useLogout();
+
+  const logoutOfApp = () => handleLogout();
+
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
       <div className="container mx-auto max-w-screen-lg h-full">
@@ -114,7 +108,7 @@ const Header = () => {
                 <div className="flex items-center cursor-pointer">
                   <Link to={`/profile/${auth.currentUser.displayName}`}>
                     <img
-                      src={userAvatar}
+                      // src={userAvatar}
                       className="rounded-full h-8 w-8 flex"
                       alt={`${auth.currentUser.displayName} profile`}
                     />
