@@ -1,39 +1,29 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../app/features/userSlice";
-import { auth } from "../configs/firebase";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import useLogin from "../hooks/useLogin";
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const isInvalid = password == "" || email == "";
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      alert("Please enter your email & password");
-    }
-    try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      dispatch(
-        login({
-          email: user.email,
-          uid: user.uid,
-          username: user.displayName,
-          avatar: user.photoURL,
-        })
-      );
-      navigate("/");
-    } catch (error) {
-      setEmail("");
-      setPassword("");
-      setError(error.message);
-    }
-  };
+  const validations = Yup.object().shape({
+    email: Yup.string().email().required().label("Email"),
+    password: Yup.string().min(6).required().label("Password"),
+  });
+  const {
+    watch,
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(validations),
+    defaultValues: {},
+  });
+  const isInvalid = !watch("email") || !watch("password");
+  const { loading, logIn } = useLogin();
+
+  const handleLogin = async (data) => logIn(data);
 
   useEffect(() => {
     document.title = "Login - Page";
@@ -50,36 +40,48 @@ const Login = () => {
               className="mt-2 w-6/12 mb-4"
             />
           </h1>
-          {error && <p className="mb-4 text-xs text-red-500">{error}</p>}
-          <form onSubmit={handleLogin}>
+          <form
+            onSubmit={handleSubmit(handleLogin)}
+            className=" flex flex-col gap-2 w-full"
+          >
             <input
-              aria-label="Enter your email address"
               type="text"
               placeholder="Email address"
-              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              value={email}
+              className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-300 rounded"
+              {...register("email")}
             />
+            {errors?.email?.message && (
+              <span
+                style={{
+                  ...(errors?.email && { color: "red" }),
+                }}
+              >
+                {errors?.email?.message}
+              </span>
+            )}
             <input
-              aria-label="Enter your password"
               type="password"
               placeholder="Password"
-              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              value={password}
+              className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-300 rounded"
+              {...register("password")}
             />
+            {errors?.password?.message && (
+              <span
+                style={{
+                  ...(errors?.password && { color: "red" }),
+                }}
+              >
+                {errors?.password?.message}
+              </span>
+            )}
             <button
-              disabled={isInvalid}
+              disabled={isInvalid || loading}
               type="submit"
-              className={`bg-blue-500 text-white w-full rounded h-8 font-bold ${
-                isInvalid && "opacity-50"
+              className={`bg-blue-500 text-white w-full rounded h-8 font-bold flex justify-center items-center ${
+                (isInvalid || loading) && "opacity-50"
               }`}
             >
-              Log in
+              {loading ? <div className="spinner-in-button"></div> : "Sign In"}
             </button>
           </form>
         </div>
