@@ -6,43 +6,72 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../app/features/userSlice";
 import { auth, db } from "../configs/firebase";
 import { doesUsernameExist } from "../services/firebase";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 const SignUp = () => {
-  const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const isInvalid = password == "" || email == "";
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      alert("Please enter your email & password");
-    }
-    const usernameExists = await doesUsernameExist(username);
 
-    if (!usernameExists.length) {
+  const validations = Yup.object()
+    .shape({
+      username: Yup.string().required(),
+      firstName: Yup.string().required(),
+      lastName: Yup.string().required(),
+      email: Yup.string().email().required().label("Email"),
+      password: Yup.string().min(6).required().label("Password"),
+      confirmPassword: Yup.string().min(6).required().label("Confirm Password"),
+    })
+    .test("doesPasswordRepeat", null, (data) => {
+      if (data.password !== data.confirmPassword) {
+        return new Yup.ValidationError(
+          "Confirm Password does not match",
+          true,
+          "confirmPassword"
+        );
+      }
+      return true;
+    });
+  const {
+    watch,
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(validations),
+    defaultValues: {},
+  });
+  const isInvalid =
+    !watch("username") ||
+    !watch("firstName") ||
+    !watch("lastName") ||
+    !watch("email") ||
+    !watch("password");
+
+  const handleSignUp = async (data) => {
+    const usernameExists = await doesUsernameExist(data?.username);
+    if (!usernameExists?.length) {
       try {
         const { user } = await createUserWithEmailAndPassword(
           auth,
-          email,
-          password
+          data?.email,
+          data?.password
         );
 
         await updateProfile(user, {
-          displayName: username,
+          displayName: data?.username,
           photoURL:
             "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
         });
         const usersCollectionRef = collection(db, "users");
         await addDoc(usersCollectionRef, {
           userId: user.uid,
-          username,
-          firstName,
-          lastName,
-          email,
+          username: data?.username,
+          firstName: data?.firstName,
+          lastName: data?.lastName,
+          email: data?.email,
           userAvatar:
             "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
           following: [],
@@ -53,24 +82,18 @@ const SignUp = () => {
         });
         dispatch(
           login({
-            email: user.email,
-            uid: user.uid,
-            username: user.displayName,
-            avatar: user.photoURL,
+            email: user?.email,
+            uid: user?.uid,
+            username: user?.displayName,
+            avatar: user?.photoURL,
           })
         );
         navigate("/");
       } catch (error) {
-        setUsername("");
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setPassword("");
         setError(error.message);
+        console.error(error.message);
       }
     } else {
-      setUsername("");
-
       setError("That username is already taken, please try another.");
     }
   };
@@ -78,7 +101,8 @@ const SignUp = () => {
   useEffect(() => {
     document.title = "Sign Up - Page";
   }, []);
-
+  console.log(watch());
+  console.log(errors);
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen justify-center">
       <div className="flex flex-col w-2/5">
@@ -91,57 +115,80 @@ const SignUp = () => {
             />
           </h1>
           {error && <p className="mb-4 text-xs text-red-500">{error}</p>}
-          <form onSubmit={handleSignUp}>
+          <form
+            onSubmit={handleSubmit(handleSignUp)}
+            className=" flex flex-col gap-2 w-full"
+          >
             <input
               aria-label="Enter your username"
               type="text"
               placeholder="Username"
-              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-              value={username}
+              className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-300 rounded"
+              {...register("username")}
             />
             <input
               aria-label="Enter your first name"
               type="text"
               placeholder="First Name"
-              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
-              onChange={(e) => {
-                setFirstName(e.target.value);
-              }}
-              value={firstName}
+              className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-300 rounded"
+              {...register("firstName")}
             />
             <input
               aria-label="Enter your last name"
               type="text"
               placeholder="Last Name"
-              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
-              onChange={(e) => {
-                setLastName(e.target.value);
-              }}
-              value={lastName}
+              className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-300 rounded"
+              {...register("lastName")}
             />
             <input
               aria-label="Enter your email address"
               type="text"
               placeholder="Email address"
-              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              value={email}
+              className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-300 rounded"
+              {...register("email")}
             />
+            {errors?.email?.message && (
+              <span
+                style={{
+                  ...(errors?.email && { color: "red" }),
+                }}
+              >
+                {errors?.email?.message}
+              </span>
+            )}
+
             <input
               aria-label="Enter your password"
               type="password"
               placeholder="Password"
-              className="text-sm text-gray-500 w-full mr-3 py-5 px-4 h-2 border border-gray-300 rounded mb-2"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              value={password}
+              className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-300 rounded"
+              {...register("password")}
             />
+            {errors?.password?.message && (
+              <span
+                style={{
+                  ...(errors?.password && { color: "red" }),
+                }}
+              >
+                {errors?.password?.message}
+              </span>
+            )}
+            <input
+              aria-label="Enter your confirm password"
+              type="password"
+              placeholder="Confirm Password"
+              className="text-sm text-gray-500 w-full py-5 px-4 h-2 border border-gray-300 rounded"
+              {...register("confirmPassword")}
+            />
+            {errors?.confirmPassword?.message && (
+              <span
+                style={{
+                  ...(errors?.confirmPassword && { color: "red" }),
+                }}
+              >
+                {errors?.confirmPassword?.message}
+              </span>
+            )}
             <button
               disabled={isInvalid}
               type="submit"
