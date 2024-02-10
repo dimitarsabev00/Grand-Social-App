@@ -9,6 +9,7 @@ import {
 import { lazy, Suspense } from "react";
 import useAuthListener from "./hooks/useAuthListener";
 import ReactLoader from "./components/ReactLoader/loader";
+import { Toaster } from "react-hot-toast";
 
 const Profile = lazy(() => import("./screens/Profile"));
 const Home = lazy(() => import("./screens/Home"));
@@ -38,6 +39,7 @@ function App() {
           <Route path="/not-found" element={<ErrorPage />} />
         </Routes>
       </Suspense>
+      <Toaster />
     </Router>
   );
 }
