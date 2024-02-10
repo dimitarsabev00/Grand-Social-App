@@ -10,11 +10,11 @@ import { lazy, Suspense } from "react";
 import useAuthListener from "./hooks/useAuthListener";
 import ReactLoader from "./components/ReactLoader/loader";
 
-const Profile = lazy(() => import("./pages/Profile"));
-const Home = lazy(() => import("./pages/Home"));
-const SignUp = lazy(() => import("./pages/SignUp"));
-const Login = lazy(() => import("./pages/Login"));
-const ErrorPage = lazy(() => import("./pages/ErrorPage"));
+const Profile = lazy(() => import("./screens/Profile"));
+const Home = lazy(() => import("./screens/Home"));
+const SignUp = lazy(() => import("./screens/SignUp"));
+const Login = lazy(() => import("./screens/Login"));
+const ErrorPage = lazy(() => import("./screens/ErrorPage"));
 function App() {
   const { user } = useAuthListener();
   return (
