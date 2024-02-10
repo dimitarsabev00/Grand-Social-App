@@ -1,5 +1,3 @@
-import "./App.css";
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,11 +6,11 @@ import {
   useLocation,
 } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import useAuthListener from "./hooks/useAuthListener";
 import ReactLoader from "./components/ReactLoader/loader";
 import { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { selectUser } from "./app/features/userSlice";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./configs/firebase";
+import "./App.css";
 
 const Profile = lazy(() => import("./screens/Profile"));
 const Home = lazy(() => import("./screens/Home"));
@@ -20,23 +18,18 @@ const SignUp = lazy(() => import("./screens/SignUp"));
 const Login = lazy(() => import("./screens/Login"));
 const ErrorPage = lazy(() => import("./screens/ErrorPage"));
 function App() {
-  const { user } = useAuthListener();
-
-  const currentUser = useSelector(selectUser);
-
-  const isAuthenticated = currentUser !== null;
+  const [user] = useAuthState(auth);
 
   const PrivateRoute = ({ children }) => {
     let location = useLocation();
-    if (!isAuthenticated)
+    if (!user)
       return <Navigate to="/login" state={{ from: location }} replace />;
     return children;
   };
 
   const AuthRoute = ({ children }) => {
     let location = useLocation();
-    if (isAuthenticated)
-      return <Navigate to={"/"} state={{ from: location }} replace />;
+    if (user) return <Navigate to={"/"} state={{ from: location }} replace />;
     return children;
   };
   return (
@@ -76,7 +69,14 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/not-found" element={<ErrorPage />} />
+          <Route
+            path="/not-found"
+            element={
+              <PrivateRoute>
+                <ErrorPage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Suspense>
       <Toaster />
