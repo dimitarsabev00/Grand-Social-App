@@ -1,19 +1,10 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../app/features/userSlice";
-import { auth, db } from "../configs/firebase";
-import { doesUsernameExist } from "../services/firebase";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import useSignUpWithEmailAndPassword from "../hooks/useSignUpWithEmailAndPassword";
 const SignUp = () => {
-  const [error, setError] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const validations = Yup.object()
     .shape({
       username: Yup.string().required(),
@@ -49,60 +40,14 @@ const SignUp = () => {
     !watch("lastName") ||
     !watch("email") ||
     !watch("password");
+  const { loading, signup } = useSignUpWithEmailAndPassword();
 
-  const handleSignUp = async (data) => {
-    const usernameExists = await doesUsernameExist(data?.username);
-    if (!usernameExists?.length) {
-      try {
-        const { user } = await createUserWithEmailAndPassword(
-          auth,
-          data?.email,
-          data?.password
-        );
-
-        await updateProfile(user, {
-          displayName: data?.username,
-          photoURL:
-            "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
-        });
-        const usersCollectionRef = collection(db, "users");
-        await addDoc(usersCollectionRef, {
-          userId: user.uid,
-          username: data?.username,
-          firstName: data?.firstName,
-          lastName: data?.lastName,
-          email: data?.email,
-          userAvatar:
-            "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
-          following: [],
-          followers: [],
-          dataCreated: Timestamp.now().toDate().toDateString(),
-          location: "",
-          bio: "",
-        });
-        dispatch(
-          login({
-            email: user?.email,
-            uid: user?.uid,
-            username: user?.displayName,
-            avatar: user?.photoURL,
-          })
-        );
-        navigate("/");
-      } catch (error) {
-        setError(error.message);
-        console.error(error.message);
-      }
-    } else {
-      setError("That username is already taken, please try another.");
-    }
-  };
+  const handleSignUp = async (data) => signup(data);
 
   useEffect(() => {
     document.title = "Sign Up - Page";
   }, []);
-  console.log(watch());
-  console.log(errors);
+
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen justify-center">
       <div className="flex flex-col w-2/5">
@@ -114,7 +59,6 @@ const SignUp = () => {
               className="mt-2 w-6/12 mb-4"
             />
           </h1>
-          {error && <p className="mb-4 text-xs text-red-500">{error}</p>}
           <form
             onSubmit={handleSubmit(handleSignUp)}
             className=" flex flex-col gap-2 w-full"
@@ -190,13 +134,13 @@ const SignUp = () => {
               </span>
             )}
             <button
-              disabled={isInvalid}
+              disabled={isInvalid || loading}
               type="submit"
-              className={`bg-blue-500 text-white w-full rounded h-8 font-bold ${
-                isInvalid && "opacity-50"
+              className={`bg-blue-500 text-white w-full rounded h-8 font-bold flex justify-center items-center ${
+                (isInvalid || loading) && "opacity-50"
               }`}
             >
-              Sign Up
+              {loading ? <div className="spinner-in-button"></div> : "Sign Up"}
             </button>
           </form>
         </div>
