@@ -43,7 +43,7 @@ const EditProfile = () => {
               <img
                 src={selectedFile || authUser?.photoURL}
                 alt={` profile picture`}
-                className="rounded-full h-40 w-40 flex object-fill"
+                className="rounded-full h-40 w-40 flex object-cover"
               />
             </div>
             <button

@@ -108,7 +108,7 @@ const Header = () => {
                   <Link to={`/profile/${currentUser?.username}`}>
                     <img
                       src={currentUser?.photoURL}
-                      className="rounded-full h-8 w-8 flex"
+                      className="rounded-full h-8 w-8 flex object-cover"
                       alt={`${currentUser?.username} profile`}
                     />
                   </Link>
