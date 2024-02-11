@@ -1,109 +1,83 @@
-import { useEffect, useState } from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import useUser from "../../hooks/useUser";
-import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
-const HeaderUserProfile = ({
-  postsCount,
-  profile: {
-    docId: profileDocId,
-    userId: profileUserId,
-    firstName,
-    lastName,
-    followers = [],
-    following = [],
-    username: profileUsername,
-  },
-  followerCount,
-  setFollowerCount,
-}) => {
-  const { user } = useUser();
-  const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  const activeBtnFollow = user?.username && user?.username !== profileUsername;
-  const fullName = `${firstName} ${lastName}`;
-  useEffect(() => {
-    const isLoggedInUserFollowingProfile = async () => {
-      const isFollowing = await isUserFollowingProfile(
-        user.username,
-        profileUserId
-      );
-      setIsFollowingProfile(!!isFollowing);
-    };
-    if (user?.username && profileUserId) {
-      isLoggedInUserFollowingProfile();
-    }
-  }, [user?.username, profileUserId]);
+import { useSelector } from "react-redux";
+import { selectUser, selectUserProfile } from "../../app/features/userSlice";
+import { useNavigate } from "react-router-dom";
+import useFollowUser from "../../hooks/useFollowUser";
 
-  const handleToggleFollow = async () => {
-    setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
-    setFollowerCount({
-      followerCount: isFollowingProfile ? followerCount - 1 : followerCount + 1,
-    });
-    await toggleFollow(
-      isFollowingProfile,
-      user.docId,
-      profileDocId,
-      profileUserId,
-      user.userId
-    );
-  };
+const HeaderUserProfile = () => {
+  const userProfile = useSelector(selectUserProfile);
+  const authUser = useSelector(selectUser);
+
+  const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(
+    userProfile?.uid
+  );
+  const visitingOwnProfileAndAuth =
+    authUser && authUser.username === userProfile.username;
+  const visitingAnotherProfileAndAuth =
+    authUser && authUser.username !== userProfile.username;
+
+  const navigate = useNavigate();
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
       <div className="container flex justify-center items-center">
-        {profileUsername ? (
-          <img
-            src={user.userAvatar}
-            alt={`${profileUsername} profile picture`}
-            className="rounded-full h-40 w-40 flex"
-          />
-        ) : (
-          <Skeleton circle height={150} width={150} count={1} />
-        )}
+        <img
+          src={userProfile?.photoURL}
+          alt={`${userProfile?.username} profile picture`}
+          className="rounded-full h-40 w-40 flex object-cover"
+        />
       </div>
       <div className="flex items-center justify-center flex-col col-span-2">
         <div className="container flex items-center">
-          <p className="text-2x1 mr-4">{profileUsername}</p>
-          {activeBtnFollow ? (
+          <p className="text-2x1 mr-4">{userProfile?.username}</p>
+          {visitingAnotherProfileAndAuth && (
             <button
-              className="bg-blue-500 font-bold text-sm rounded text-white w-20 h-8"
               type="button"
-              onClick={handleToggleFollow}
+              className={`bg-blue-500 font-bold text-sm rounded text-white w-20 h-8 hover:bg-blue-400 flex justify-center items-center ${
+                isUpdating && "opacity-50"
+              }`}
+              onClick={handleFollowUser}
             >
-              {isFollowingProfile ? "Unfollow" : "Follow"}
+              {isUpdating ? (
+                <div className="spinner-in-button"></div>
+              ) : (
+                <>{isFollowing ? "Unfollow" : "Follow"}</>
+              )}
             </button>
-          ) : (
+          )}
+
+          {visitingOwnProfileAndAuth && (
             <button
               className="text-sm rounded text-black font-semibold  border border-gray-500 p-1"
               type="button"
+              onClick={() => {
+                navigate(`/editProfile/${authUser?.username}`);
+              }}
             >
               Edit profile
             </button>
-            
           )}
         </div>
         <div className="container flex mt-4">
-          {!followers || !following ? (
-            <Skeleton count={1} width={677} height={24} />
-          ) : (
-            <>
-              <p className="mr-10">
-                <span className="font-bold">{postsCount}</span> posts
-              </p>
-              <p className="mr-10">
-                <span className="font-bold">{followerCount}</span>
-                {` `}
-                {followerCount === 1 ? `follower` : `followers`}
-              </p>
-              <p className="mr-10">
-                <span className="font-bold">{following?.length}</span> following
-              </p>
-            </>
-          )}
+          <p className="mr-10">
+            <span className="font-bold">{userProfile?.posts?.length}</span>{" "}
+            posts
+          </p>
+          <p className="mr-10">
+            <span className="font-bold">{userProfile?.followers?.length}</span>
+            {` `}
+            {userProfile?.followers?.length === 1 ? `follower` : `followers`}
+          </p>
+          <p className="mr-10">
+            <span className="font-bold">{userProfile?.following?.length}</span>{" "}
+            following
+          </p>
         </div>
         <div className="container mt-4">
           <p className="font-medium">
-            {!fullName ? <Skeleton count={1} height={24} /> : fullName}
+            {`${userProfile?.firstName} ${userProfile?.lastName}`}
           </p>
+        </div>
+        <div className="container mt-4">
+          <p>{userProfile?.bio}</p>
         </div>
       </div>
     </div>
