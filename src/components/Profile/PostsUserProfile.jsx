@@ -1,5 +1,4 @@
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 const PostsUserProfile = ({ posts }) => {
   return (
     <div className="h-16 border-t border-gray-500 mt-12 pt-4">
