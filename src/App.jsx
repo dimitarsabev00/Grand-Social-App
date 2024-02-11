@@ -61,22 +61,8 @@ function App() {
               </AuthRoute>
             }
           />
-          <Route
-            path="/profile/:username"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/not-found"
-            element={
-              <PrivateRoute>
-                <ErrorPage />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/not-found" element={<ErrorPage />} />
         </Routes>
       </Suspense>
       <Toaster />
