@@ -67,7 +67,7 @@ function App() {
           <Route path="/not-found" element={<ErrorPage />} />
         </Routes>
       </Suspense>
-      <Toaster />
+      <Toaster position="top right"/>
     </Router>
   );
 }
