@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./configs/firebase";
 import "./App.css";
+import EditProfile from "./screens/EditProfile";
 
 const Profile = lazy(() => import("./screens/Profile"));
 const Home = lazy(() => import("./screens/Home"));
@@ -62,6 +63,7 @@ function App() {
             }
           />
           <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/editProfile/:username" element={<EditProfile />} />
           <Route path="/not-found" element={<ErrorPage />} />
         </Routes>
       </Suspense>
