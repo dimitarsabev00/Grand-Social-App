@@ -13,7 +13,7 @@ const Profile = () => {
   const { isLoadingPosts, posts } = useGetUserPosts();
 
   const userNotFound = !isLoading && !userProfile;
-  const postsNotFound = posts.length === 0;
+  const postsNotFound = !isLoadingPosts && posts.length === 0;
 
   return (
     <>
