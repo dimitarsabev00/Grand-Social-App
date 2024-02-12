@@ -5,33 +5,14 @@ import useUser from "../../hooks/useUser";
 import Suggestions from "./Suggestions";
 import User from "./User";
 const SideBar = () => {
-  const user = useSelector(selectUser);
-
-  const {
-    user: {
-      docId,
-      firstName,
-      lastName,
-      username,
-      userId,
-      following,
-      userAvatar,
-    },
-  } = useUser();
+  const authUser = useSelector(selectUser);
 
   return (
     <div className="p-4">
-      {user ? (
+      {authUser ? (
         <>
-          <User
-            username={username}
-            fullName={`${firstName} ${lastName}`}
-            userAvatar={userAvatar}
-          />
+          <User authUser={authUser} />
           <Suggestions
-            userId={userId}
-            following={following}
-            loggedInUserDocId={docId}
           />
         </>
       ) : (
