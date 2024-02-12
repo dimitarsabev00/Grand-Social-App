@@ -26,6 +26,7 @@ const useCreatePost = () => {
   const dispatch = useDispatch();
   const handleCreatePost = async (selectedFile, postDescription) => {
     if (isLoading) return;
+    if (!postDescription) throw new Error("Please write description for post");
     if (!selectedFile) throw new Error("Please select an image");
     setIsLoading(true);
     const newPost = {
