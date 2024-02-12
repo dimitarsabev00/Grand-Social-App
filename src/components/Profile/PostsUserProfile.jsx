@@ -3,7 +3,7 @@ const PostsUserProfile = ({ posts }) => {
     <div className="h-16 border-t border-gray-500 mt-12 pt-4">
       <div className="grid grid-cols-3 gap-4 mt-4 mb-12">
         {posts?.map((post) => (
-          <div key={post.docId} className="relative group rounded-md">
+          <div key={post.id} className="relative group rounded-md">
             <img
               src={post?.imageURL}
               alt={post.description}
