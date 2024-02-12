@@ -22,6 +22,12 @@ export const userSlice = createSlice({
     setUserProfile: (state, action) => {
       state.userProfile = action.payload;
     },
+    addNewPostInUserProfile: (state, action) => {
+      state.userProfile = {
+        ...state.userProfile,
+        posts: [action.payload.id, ...state.userProfile.posts],
+      };
+    },
   },
 });
 
@@ -32,6 +38,7 @@ export const {
   setAuthUser,
   startLoading,
   stopLoading,
+  addNewPostInUserProfile,
 } = userSlice.actions;
 export const selectUser = (state) => state.user.authUser;
 export const selectUserProfile = (state) => state.user.userProfile;
