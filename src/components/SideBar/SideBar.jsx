@@ -1,7 +1,6 @@
 import { memo } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../app/features/userSlice";
-import useUser from "../../hooks/useUser";
 import Suggestions from "./Suggestions";
 import User from "./User";
 const SideBar = () => {
