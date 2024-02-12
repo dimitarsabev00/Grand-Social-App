@@ -2,27 +2,43 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../app/features/userSlice";
 import { Link } from "react-router-dom";
 import useLogout from "../../hooks/useLogout";
+import { useRef } from "react";
+import useSearchUser from "../../hooks/useSearchUser";
+import SuggestedUser from "../SuggestedUser/SuggestedUser";
 const Header = () => {
-  const currentUser = useSelector(selectUser);
-
+  const authUser = useSelector(selectUser);
   const { handleLogout } = useLogout();
+  const { user, isLoading, getUserProfile, setUser } = useSearchUser();
+
+  const searchRef = useRef(null);
 
   const logoutOfApp = () => handleLogout();
+
+  const handleSearchUser = (e) => {
+    e.preventDefault();
+    getUserProfile(searchRef.current.value);
+  };
 
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
       <div className="container mx-auto max-w-screen-lg h-full">
         <div className="flex justify-between items-center h-full">
-          <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
+          <div
+            className="text-gray-700 text-center flex items-center align-items cursor-pointer"
+            onClick={() => {
+              setUser(null);
+              searchRef.current.value = null;
+            }}
+          >
             <Link to="/" aria-label="Social Media Logo">
               <img
                 src="https://www.logo.wine/a/logo/Instagram/Instagram-Glyph-Black-Logo.wine.svg"
-                alt=""
+                alt={`Social Media Logo`}
                 className="w-10 h-10 mr-3"
               />
             </Link>
           </div>
-          <form>
+          <form onSubmit={handleSearchUser}>
             <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -47,11 +63,19 @@ const Header = () => {
                 className="pr-3 pl-10 py-2 font-semibold placeholder-gray-base text-black-light rounded-lg border border-gray-base
           h-8
           "
+                ref={searchRef}
               />
+              {user && (
+                <SuggestedUser
+                  user={user}
+                  setUser={setUser}
+                  searchRef={searchRef}
+                />
+              )}
             </div>
           </form>
           <div className="text-gray-700 text-center flex items-center align-items">
-            {currentUser ? (
+            {authUser ? (
               <>
                 <Link to="/" aria-label="HomePage">
                   <svg
@@ -105,11 +129,11 @@ const Header = () => {
                   </svg>
                 </button>
                 <div className="flex items-center cursor-pointer">
-                  <Link to={`/profile/${currentUser?.username}`}>
+                  <Link to={`/profile/${authUser?.username}`}>
                     <img
-                      src={currentUser?.photoURL}
+                      src={authUser?.photoURL}
                       className="rounded-full h-8 w-8 flex object-cover"
-                      alt={`${currentUser?.username} profile`}
+                      alt={`${authUser?.username} profile`}
                     />
                   </Link>
                 </div>
