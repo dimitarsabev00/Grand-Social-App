@@ -9,9 +9,12 @@ export const postsSlice = createSlice({
     createPost: (state, action) => {
       state.posts = [action.payload, ...state.posts];
     },
+    setPosts: (state, action) => {
+      state.posts = action.payload;
+    },
   },
 });
 
-export const {createPost} = postsSlice.actions;
+export const { createPost, setPosts } = postsSlice.actions;
 
 export default postsSlice.reducer;
