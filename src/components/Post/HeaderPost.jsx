@@ -86,7 +86,7 @@ const HeaderPost = ({ authorProfile, postID }) => {
             {isUpdating ? (
               <div className="spinner-in-button"></div>
             ) : (
-              <>{isFollowing ? "Unfollow" : "Follow"}</>
+              "Unfollow"
             )}
           </button>
         )}
