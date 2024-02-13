@@ -18,6 +18,10 @@ const usePostComment = () => {
       comment,
       createdAt: Date.now(),
       createdBy: authUser.uid,
+      author: {
+        uid: authUser.uid,
+        username: authUser?.username,
+      },
       postId,
     };
     try {
