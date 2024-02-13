@@ -20,7 +20,7 @@ const AddCommentPost = ({ commentInput, postID }) => {
         <input
           aria-label="Add a comment"
           autoComplete="off"
-          className="text-sm text-gray-base w-full mr-3 py-5 px-4"
+          className="text-sm text-gray-base w-full mr-3 py-5 px-4 outline-none"
           type="text"
           name="add-comment"
           placeholder="Write a comment"
