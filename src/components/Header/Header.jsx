@@ -61,7 +61,7 @@ const Header = () => {
                 name="search"
                 aria-label="Search"
                 className="pr-3 pl-10 py-2 font-semibold placeholder-gray-base text-black-light rounded-lg border border-gray-base
-          h-8
+          h-8 outline-none
           "
                 ref={searchRef}
               />
