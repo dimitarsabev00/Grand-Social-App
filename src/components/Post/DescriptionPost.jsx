@@ -1,7 +1,7 @@
-const DescriptionPost = ({ description }) => {
+const DescriptionPost = ({ postDescription }) => {
   return (
     <div className="p-4 pt-0">
-      <span className="font-mono">{description}</span>
+      <span className="font-mono">{postDescription}</span>
     </div>
   );
 };
