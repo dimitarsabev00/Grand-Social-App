@@ -5,11 +5,8 @@ export const userSlice = createSlice({
   initialState: {
     authUser: JSON.parse(localStorage.getItem("user-info")) || null,
     userProfile: null,
-    isLoading: false,
   },
   reducers: {
-    startLoading: (state) => ({ ...state, isLoading: true }),
-    stopLoading: (state) => ({ ...state, isLoading: false }),
     login: (state, action) => {
       state.authUser = action.payload;
     },
@@ -44,8 +41,6 @@ export const {
   logout,
   setUserProfile,
   setAuthUser,
-  startLoading,
-  stopLoading,
   addNewPostInUserProfile,
   removePostInUserProfile,
 } = userSlice.actions;
