@@ -53,12 +53,11 @@ const Profile = () => {
           </div>
         </div>
       )}
-
-      {isLoadingPosts && (
+      {isLoadingPosts && !userNotFound && (
         <div className="mx-auto max-w-screen-lg">
           {/* Skeleton For PostsUserProfile */}
           <div className="h-16 border-t border-gray-500 mt-12 pt-4 flex justify-center">
-              <Skeleton count={3} width={1000} height={500} className="mb-5" />
+            <Skeleton count={3} width={1000} height={500} className="mb-5" />
           </div>
         </div>
       )}
