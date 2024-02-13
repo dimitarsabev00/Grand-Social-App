@@ -9,7 +9,12 @@ const Feed = () => {
 
   return (
     <div className="container col-span-2">
-      <CreatePost />
+      {isLoading ? (
+        <Skeleton count={3} width={675} height={181} className="mb-5" />
+      ) : (
+        <CreatePost />
+      )}
+
       {isLoading && (
         <Skeleton count={3} width={675} height={500} className="mb-5" />
       )}
