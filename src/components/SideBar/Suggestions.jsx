@@ -7,9 +7,7 @@ const Suggestions = ({}) => {
 
   return isLoading ? (
     <>
-      <Skeleton count={1} height={24} width={300} className="mt-5 " />
-      <Skeleton count={1} height={24} width={300} className="mt-5 " />
-      <Skeleton count={1} height={24} width={300} className="mt-5 " />
+      <Skeleton count={3} height={24} width={300} className="mt-5 " />
     </>
   ) : (
     <div className="rounded flex flex-col">
