@@ -12,7 +12,7 @@ const User = ({ authUser }) =>
     >
       <div className="flex items-center justify-between col-span-1">
         <img
-          className="rounded-full w-16 flex mr-3"
+          className="rounded-full h-16 w-16 flex object-cover"
           src={authUser?.photoURL}
           alt=""
         />

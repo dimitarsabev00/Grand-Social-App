@@ -31,7 +31,7 @@ const CreatePost = () => {
         <img
           src={authUser?.photoURL}
           alt=""
-          className="rounded-full w-16 mr-3 cursor-pointer"
+          className="rounded-full h-16 w-16 mr-3 flex object-cover cursor-pointer"
           onClick={() => navigate(`/profile/${authUser?.username}`)}
         />
         <form onSubmit={handlePostCreation} className="flex flex-1">
