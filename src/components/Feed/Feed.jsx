@@ -1,38 +1,28 @@
 import Post from "../Post/Post";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import useUser from "../../hooks/useUser";
-import usePosts from "../../hooks/usePosts";
 import CreatePost from "./CreatePost";
+import useGetFeedPosts from "../../hooks/useGetFeedPosts";
 const Feed = () => {
-  const { user } = useUser();
+  const { isLoading, posts } = useGetFeedPosts();
 
-  const { posts } = usePosts(user);
+  const feedPostsNotFound = !isLoading && posts.length === 0;
 
   return (
     <div className="container col-span-2">
       <CreatePost />
-      {user.following === undefined ? (
-        <Skeleton count={2} width={640} height={500} className="mb-5" />
-      ) : user.following.length === 0 ? (
+      {isLoading && (
+        <Skeleton count={3} width={675} height={500} className="mb-5" />
+      )}
+      {feedPostsNotFound && (
         <p className="flex justify-center font-bold">
           Follow other people to see Posts
         </p>
-      ) : posts ? (
+      )}
+      {!isLoading &&
+        posts?.length > 0 &&
         posts.map((post) => {
-          return (
-            <Post
-              authorUsername={post.authorUsername}
-              docId={post.docId}
-              totalLikes={post.likes.length}
-              likedPhoto={post.userLikedPhoto}
-              description={post.description}
-              comments={post.comments}
-              posted={post.dateCreated}
-            />
-          );
-        })
-      ) : null}
+          return <Post post={post} key={post?.id} />;
+        })}
     </div>
   );
 };
