@@ -1,48 +1,51 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { formatDistance } from "date-fns";
 import AddCommentPost from "./AddCommentPost";
-const CommentPost = ({
-  docId,
-  comments: allComments,
-  posted,
-  commentInput,
-}) => {
-  const [comments, setComments] = useState(allComments);
+import { useSelector } from "react-redux";
+import { selectUser } from "../../app/features/userSlice";
+import useGetUserProfileById from "../../hooks/useGetUserProfileById";
+import { timeAgo } from "../../utils/timeAgo";
+const CommentPost = ({ commentInput, post }) => {
+  const authUser = useSelector(selectUser);
+
   const [commentsSlice, setCommentsSlice] = useState(3);
+
+  const { isLoadingUserData, userProfile, setUserProfile } =
+    useGetUserProfileById(post?.createdBy);
+
   const showNextComments = () => {
     setCommentsSlice(commentsSlice + 3);
   };
+
   return (
     <>
       <div className="p-4 pt-1 pb-4">
-        {comments.slice(0, commentsSlice).map((item) => (
-          <p key={`${item.comment}-${item.username}`} className="mb-1">
-            <Link to={`/profile/${item.username}`}>
-              <span className="mr-1 font-bold">{item.username}</span>
+        {post?.comments?.slice(0, commentsSlice)?.map((item) => (
+          <p key={item.id} className="mb-1">
+            <Link to={`/profile/${userProfile?.username}`}>
+              <span className="mr-1 font-bold">{userProfile?.username}</span>
             </Link>
-            <span>{item.comment}</span>
+            <span>{item?.comment}</span>
           </p>
         ))}
-        {comments.length >= 3 && commentsSlice < comments.length && (
-          <button
-            className="text-sm text-gray-base mb-1 cursor-pointer focus:outline-none"
-            type="button"
-            onClick={showNextComments}
-          >
-            View more comments
-          </button>
-        )}
+        {post?.comments.length >= 3 &&
+          commentsSlice < post?.comments.length && (
+            <button
+              className="text-sm text-gray-base mb-1 cursor-pointer focus:outline-none"
+              type="button"
+              onClick={showNextComments}
+            >
+              View more comments
+            </button>
+          )}
+
         <p className="text-gray-base uppercase text-xs mt-2">
-          {formatDistance(posted, new Date())} ago
+          {timeAgo(post?.createdAt)}
         </p>
       </div>
-      <AddCommentPost
-        docId={docId}
-        comments={comments}
-        setComments={setComments}
-        commentInput={commentInput}
-      />
+      {authUser && (
+        <AddCommentPost postID={post.id} commentInput={commentInput} />
+      )}
     </>
   );
 };

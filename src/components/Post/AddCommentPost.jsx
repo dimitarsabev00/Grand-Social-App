@@ -1,35 +1,21 @@
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../app/features/userSlice";
-import { db } from "../../configs/firebase";
+import usePostComment from "../../hooks/usePostComment";
 
-const AddCommentPost = ({ docId, comments, setComments, commentInput }) => {
+const AddCommentPost = ({ commentInput, postID }) => {
+  const { isCommenting, handlePostComment } = usePostComment();
   const [comment, setComment] = useState("");
-  const user = useSelector(selectUser);
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
-
-    setComments([...comments, { username: user.username, comment }]);
+    await handlePostComment(postID, comment);
     setComment("");
-
-    const postDoc = doc(db, "posts", docId);
-    const newField = {
-      comments: arrayUnion({ username: user.username, comment }),
-    };
-    await updateDoc(postDoc, newField);
   };
   return (
     <div className="border-t border-gray-primary">
       <form
         className="flex justify-between pl-0 pr-5"
         method="POST"
-        onSubmit={(event) =>
-          comment.length >= 1
-            ? handleSubmitComment(event)
-            : event.preventDefault()
-        }
+        onSubmit={handleSubmitComment}
       >
         <input
           aria-label="Add a comment"
@@ -45,14 +31,13 @@ const AddCommentPost = ({ docId, comments, setComments, commentInput }) => {
           ref={commentInput}
         />
         <button
-          className={`text-sm font-bold text-blue-medium ${
-            !comment && "opacity-25"
+          disabled={comment.length < 1 || isCommenting}
+          type="submit"
+          className={`text-sm font-bold ${
+            (comment.length < 1 || isCommenting) && "opacity-25"
           }`}
-          type="button"
-          disabled={comment.length < 1}
-          onClick={handleSubmitComment}
         >
-          Post
+          {isCommenting ? <div className="spinner-in-button"></div> : "Post"}
         </button>
       </form>
     </div>

@@ -4,34 +4,21 @@ import ActionsPost from "./ActionsPost";
 import { useRef } from "react";
 import DescriptionPost from "./DescriptionPost";
 import CommentPost from "./CommentPost";
-const Post = ({
-  authorUsername,
-  docId,
-  totalLikes,
-  likedPhoto,
-  description,
-  comments,
-  posted,
-}) => {
+import useGetUserProfileById from "../../hooks/useGetUserProfileById";
+
+const Post = ({ post }) => {
   const commentInput = useRef(null);
   const handleFocus = () => commentInput.current.focus();
+  const { isLoadingUserData, userProfile, setUserProfile } =
+    useGetUserProfileById(post?.createdBy);
+
   return (
     <div className="rounded col-span-4 border bg-white border-gray-primary mb-16">
-      <HeaderPost authorUsername={authorUsername} />
-      <DescriptionPost description={description} />
-      <ImagePost />
-      <ActionsPost
-        docId={docId}
-        totalLikes={totalLikes}
-        likedPhoto={likedPhoto}
-        handleFocus={handleFocus}
-      />
-      <CommentPost
-        docId={docId}
-        comments={comments}
-        posted={posted}
-        commentInput={commentInput}
-      />
+      <HeaderPost authorProfile={userProfile} postID={post.id} />
+      <DescriptionPost postDescription={post?.description} />
+      <ImagePost postImage={post?.imageURL} />
+      <ActionsPost handleFocus={handleFocus} post={post} />
+      <CommentPost commentInput={commentInput} post={post} />
     </div>
   );
 };
