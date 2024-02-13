@@ -13,16 +13,18 @@ const Feed = () => {
       {isLoading && (
         <Skeleton count={3} width={675} height={500} className="mb-5" />
       )}
+
+      {!isLoading &&
+        posts?.length > 0 &&
+        posts.map((post) => {
+          return <Post key={post?.id} post={post} />;
+        })}
+
       {feedPostsNotFound && (
         <p className="flex justify-center font-bold">
           Follow other people to see Posts
         </p>
       )}
-      {!isLoading &&
-        posts?.length > 0 &&
-        posts.map((post) => {
-          return <Post post={post} key={post?.id} />;
-        })}
     </div>
   );
 };
