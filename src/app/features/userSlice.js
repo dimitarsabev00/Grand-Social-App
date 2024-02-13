@@ -28,6 +28,14 @@ export const userSlice = createSlice({
         posts: [action.payload.id, ...state.userProfile.posts],
       };
     },
+    removePostInUserProfile: (state, action) => {
+      state.userProfile = {
+        ...state.userProfile,
+        posts: state.userProfile.posts.filter(
+          (id) => id !== action.payload.postID
+        ),
+      };
+    },
   },
 });
 
@@ -39,6 +47,7 @@ export const {
   startLoading,
   stopLoading,
   addNewPostInUserProfile,
+  removePostInUserProfile,
 } = userSlice.actions;
 export const selectUser = (state) => state.user.authUser;
 export const selectUserProfile = (state) => state.user.userProfile;
