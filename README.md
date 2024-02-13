@@ -1,6 +1,6 @@
 # Grand-Social-App
 
-### Open Project - [https://grand-social.netlify.app/](https://grand-social.netlify.app/)
+### Open Project - [https://grand-social-app.vercel.app/](https://grand-social-app.vercel.app/)
 
 ## Available Scripts
 
