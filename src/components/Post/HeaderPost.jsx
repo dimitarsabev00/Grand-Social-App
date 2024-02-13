@@ -18,9 +18,7 @@ const HeaderPost = ({ authorProfile, postID }) => {
   const { pathname } = useLocation();
   const authUser = useSelector(selectUser);
   const dispatch = useDispatch();
-  const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(
-    authorProfile?.uid
-  );
+  const { isUpdating, handleFollowUser } = useFollowUser(authorProfile?.uid);
 
   const handleDeletePost = async () => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
