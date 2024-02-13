@@ -57,15 +57,8 @@ const Profile = () => {
       {isLoadingPosts && (
         <div className="mx-auto max-w-screen-lg">
           {/* Skeleton For PostsUserProfile */}
-          <div className="h-16 border-t border-gray-500 mt-12 pt-4">
-            <div className="grid grid-cols-3 gap-4 mt-4 mb-12">
-              <Skeleton key={12} width={330} height={165} />
-              <Skeleton key={12} width={330} height={165} />
-              <Skeleton key={12} width={330} height={165} />
-              <Skeleton key={12} width={330} height={165} />
-              <Skeleton key={12} width={330} height={165} />
-              <Skeleton key={12} width={330} height={165} />
-            </div>
+          <div className="h-16 border-t border-gray-500 mt-12 pt-4 flex justify-center">
+              <Skeleton count={3} width={1000} height={500} className="mb-5" />
           </div>
         </div>
       )}
