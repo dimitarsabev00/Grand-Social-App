@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen justify-center">
-      <div className="flex flex-col w-2/5">
+      <div className="flex flex-col w-4/5">
         <div className="flex flex-col items-center bg-white p-4 border border-gray-300 mb-4 rounded">
           <h1 className="flex justify-center w-full">
             <img
