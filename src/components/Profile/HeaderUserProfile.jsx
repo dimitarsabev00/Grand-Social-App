@@ -57,16 +57,16 @@ const HeaderUserProfile = () => {
           )}
         </div>
         <div className="container flex mt-4">
-          <p className="mr-10">
+          <p className="mr-8 whitespace-nowrap">
             <span className="font-bold">{userProfile?.posts?.length}</span>{" "}
             posts
           </p>
-          <p className="mr-10">
+          <p className="mr-8 whitespace-nowrap">
             <span className="font-bold">{userProfile?.followers?.length}</span>
             {` `}
             {userProfile?.followers?.length === 1 ? `follower` : `followers`}
           </p>
-          <p className="mr-10">
+          <p className="mr-8 whitespace-nowrap">
             <span className="font-bold">{userProfile?.following?.length}</span>{" "}
             following
           </p>
