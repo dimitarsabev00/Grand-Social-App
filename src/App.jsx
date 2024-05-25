@@ -18,7 +18,8 @@ const Home = lazy(() => import("./screens/Home"));
 const SignUp = lazy(() => import("./screens/SignUp"));
 const Login = lazy(() => import("./screens/Login"));
 const ErrorPage = lazy(() => import("./screens/ErrorPage"));
-function App() {
+
+const App = () => {
   const [user] = useAuthState(auth);
 
   const PrivateRoute = ({ children }) => {
@@ -67,9 +68,9 @@ function App() {
           <Route path="/not-found" element={<ErrorPage />} />
         </Routes>
       </Suspense>
-      <Toaster position="top right"/>
+      <Toaster position="top right" />
     </Router>
   );
-}
+};
 
 export default App;
